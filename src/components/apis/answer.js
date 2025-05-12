@@ -1,4 +1,3 @@
-//채팅 처리 API
 "use client";
 
 import { useState } from "react";
