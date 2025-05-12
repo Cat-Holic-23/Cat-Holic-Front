@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import Answer from "@/components/story/Answer";
 import axios from "@/libs/axios";
@@ -26,9 +24,6 @@ export default function AnswerPage() {
         {response}
         <div className="absolute left-1/2 transform -translate-x-1/2 top-full w-0 h-0 border-x-8 border-x-transparent border-t-[10px] border-t-gray-200"></div>
       </div>
-        {/* 무디자리리 */}
-      <div className="w-40 h-40 rounded-full bg-gray-100 border mb-4"></div>
-
       <Answer onSubmit={handleSubmit} />
     </div>
   );

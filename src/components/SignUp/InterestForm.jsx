@@ -3,6 +3,7 @@ import { useState } from "react";
 import { join } from "@/components/apis/auth";
 import { setAccessToken, setRefreshToken } from "@/utils/storage";
 
+//이걸 또 보내줘야야
 const INTERESTS = ["그림그리기", "음악듣기", "잠자기", "피아노치기", "게임하기"];
 
 export default function InterestForm() {

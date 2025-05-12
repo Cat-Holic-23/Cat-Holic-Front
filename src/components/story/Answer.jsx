@@ -1,6 +1,4 @@
-//사용자 채팅팅
-"use client";
-
+//사용자 채팅
 import { useState } from "react";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
 

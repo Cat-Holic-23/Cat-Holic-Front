@@ -14,7 +14,7 @@ const aiChoices = [
   { id: "3", text: "오답 2" },
   { id: "4", text: "오답 3" },
 ];
-const correctId = "1"; 
+const correctId = "1";
 
 export default function StoryPage() {
   const [step, setStep] = useState(0);
@@ -35,7 +35,7 @@ export default function StoryPage() {
 
   // 4지선다 선택
   const handleSelect = (id) => {
-    if (selectedId || isCorrect !== null) return; 
+    if (selectedId || isCorrect !== null) return;
     setSelectedId(id);
     const isAnswer = id === correctId;
     setIsCorrect(isAnswer);
@@ -62,21 +62,18 @@ export default function StoryPage() {
 
   return (
     <div
-      className="w-full h-screen flex flex-col justify-between items-center p-4"
+      className="w-full h-screen flex flex-col justify-between items-center bg-pink-200"
       onClick={handleScreenTouch}
       style={{ cursor: step === 1 ? "pointer" : "default" }}
     >
       {/* 무디 + 말풍선 */}
-      <MoodiSpeech
-        userMsg={userMsg}
-        step={step}
-        overrideText={
-          step === 2
-            ? "어떤 말을 할래?" // 상황에 맞는 질문 (AI 생성)
-            : undefined
-        }
-      />
-
+      <div className="items-center justify-center w-10 px-8 pt-16 pb-8">
+        <MoodiSpeech
+          userMsg={userMsg}
+          step={step}
+          overrideText={step === 2 ? "어떤 말을 할래?" : undefined}
+        />
+      </div>
       {/* step 0: 채팅 입력 */}
       {step === 0 && <Answer onSubmit={handleUserSubmit} />}
 

@@ -11,7 +11,7 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-// 요처 토큰을 헤더에 붙임 - 로그인 후 자동으로 인증 처리
+// 요청청 토큰을 헤더에 붙임 - 로그인 후 자동으로 인증 처리
 instance.interceptors.request.use((config) => {
   const token = getAccessToken();
   if (token) {

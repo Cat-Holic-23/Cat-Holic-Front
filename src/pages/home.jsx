@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Moodi from "@/components/moodi"; // 마스코트 캐릭터
 import { getUserInfoFromToken } from "@/utils/storage";
 import axios from "@/libs/axios";
@@ -50,7 +49,7 @@ export default function HomePage() {
         <div className="w-3 h-3 bg-gray-300 absolute left-1/2 -bottom-1 transform -translate-x-1/2 rotate-45"></div>
       </div>
 
-      {/* 마스코트 */}
+      {/* 무디 */}
       <div className="w-60 h-60 mt-4 rounded-full border border-gray-500 bg-gray-100 flex items-center justify-center">
         <Moodi />
       </div>

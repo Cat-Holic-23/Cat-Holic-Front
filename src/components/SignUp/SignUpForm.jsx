@@ -15,8 +15,6 @@ export default function SignupForm() {
   const terms = [
     "[필수] Moodi 이용약관",
     "[필수] 개인정보 처리방침",
-    "[선택] 광고 수신 동의",
-    "[선택] 위치 정보 이용약관",
   ];
 
   const isAllChecked = checkedItems.every(Boolean);

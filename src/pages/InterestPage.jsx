@@ -1,4 +1,4 @@
-//회원가입 페이지  - 흥미 정보보
+//회원가입 페이지  - 흥미 정보
 import Interest from "@/components/SignUp/InterestForm";
 
 export default function InterestPage() {
