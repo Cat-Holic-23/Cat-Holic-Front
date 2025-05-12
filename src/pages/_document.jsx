@@ -1,12 +1,14 @@
-
-import { Html, Head, Main, NextScript } from 'next/document';
+import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
   return (
     <Html lang="ko">
       <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
-      <style>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1 maximum-scale=1"
+        />
+        <style>
           {`
             html, body {
               height: 100%;
