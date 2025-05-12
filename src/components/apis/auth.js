@@ -26,7 +26,10 @@ export async function join({ userName, password, nickname, age, gender }) {
 
     const authHeader = res.headers["authorization"];
     if (authHeader) {
-      setAccessToken(authHeader);
+      const token = authHeader.startsWith("Bearer ")
+        ? authHeader.slice(7)
+        : authHeader;
+      setAccessToken(token);
     }
 
     return data.data;
