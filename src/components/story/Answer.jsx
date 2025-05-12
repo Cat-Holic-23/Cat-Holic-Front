@@ -1,6 +1,5 @@
 //사용자 채팅
 import { useState } from "react";
-import { PaperPlaneIcon } from "@radix-ui/react-icons";
 
 export default function ChatInput({ onSubmit }) {
   const [input, setInput] = useState("");
@@ -31,7 +30,7 @@ export default function ChatInput({ onSubmit }) {
         onClick={handleSend}
         className="ml-2 text-gray-500 hover:text-black"
       >
-        <PaperPlaneIcon />
+      submit
       </button>
     </div>
   );
