@@ -8,4 +8,6 @@ export default function Moodi() {
       className="w-full h-full object-contain"
     />
   );
+
 }
+
