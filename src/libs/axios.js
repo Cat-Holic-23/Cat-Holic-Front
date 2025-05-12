@@ -1,12 +1,12 @@
 // 커스텀 axios 인스턴스 API 요청청
-import axios from 'axios';
-import { getAccessToken } from '../utils/storage';
+import axios from "axios";
+import { getAccessToken } from "../utils/storage";
 
 //axios 새로 생성성
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
   withCredentials: true,
 });

@@ -8,9 +8,15 @@ const ERROR_MESSAGES = {
   UNKNOWN_ERROR: "알 수 없는 에러가 발생했습니다.",
 };
 
-export async function join({ userName, password }) {
+export async function join({ userName, password, nickname, age, gender }) {
   try {
-    const res = await axios.post("/join", { userName, password });
+    const res = await axios.post("/join", {
+      userName,
+      password,
+      nickname,
+      age,
+      gender,
+    });
 
     const data = res.data;
 

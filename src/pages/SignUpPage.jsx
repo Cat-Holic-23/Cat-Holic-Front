@@ -1,9 +1,9 @@
 //회원가입 페이지
-import CreateAccount from "@/components/createaccount/SignUpForm";
+import CreateAccount from "@/components/Signup/SignUpForm";
 
 export default function SignUpPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white">
+    <div className="min-h-screen items-center justify-center">
       <CreateAccount />
     </div>
   );
