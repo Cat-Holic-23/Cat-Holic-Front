@@ -1,14 +1,15 @@
- {/* 해야할 일 */}
+{
+  /* 해야할 일 */
+}
 // 1. 흥미 정보 백엔드로 보내기기
 // 2. 저 스피너 좀 고치기 - CSS
 // 3. 버튼 UI 살짝 수정 & 버튼 활성화 로직직
-
 
 import React from "react";
 import { useRouter } from "next/router";
 import MiniTitle from "@/components/minititle/minititle";
 import Moodi from "@/components/moodi";
-import InterestSpinner from "@/components/signup/interest";
+import InterestSpinner from "@/components/interest";
 import StartButton from "./../components/buttons/StartButton";
 
 export default function Interest() {
