@@ -16,7 +16,7 @@ body {
   min-height: 100vh;
   min-height: calc(var(--vh, 1vh) * 100);
   background: url("/배경.png") no-repeat center center;
-  background-size: contain; /* 이미지가 비율대로 보이게 */
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center center; /* 중앙 정렬 */
   background-color: none;

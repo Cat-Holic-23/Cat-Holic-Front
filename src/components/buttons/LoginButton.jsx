@@ -1,18 +1,11 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { isLoggedIn, hasValidToken } from "@/utils/storage";
 
 const LoginButton = ({ disabled = false }) => {
   const router = useRouter();
 
   const handleClick = () => {
-    if (isLoggedIn() && !hasValidToken()) {
-      // 토큰은 있는데 만료된 경우 (로그인 필요)
-      router.push("/login");
-    } else {
-      // 토큰 자체가 없는 경우 (회원가입 필요)
-      router.push("/signup");
-    }
+    router.push("/createaccount");
   };
 
   return (

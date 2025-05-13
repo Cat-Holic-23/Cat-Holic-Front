@@ -17,7 +17,7 @@ const InputBox = ({ value, onChange, placeholder, type = "text" }) => {
         placeholder={placeholder}
         className="
           w-full border-none outline-none bg-transparent 
-          text-[18px] text-[#222] placeholder:text-[#aaa] font-pretendard
+          text-[14px] text-[#222] placeholder:text-[#aaa] font-pretendard
         "
       />
     </div>

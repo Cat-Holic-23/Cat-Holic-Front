@@ -1,18 +1,12 @@
 import React from "react";
 import { useRouter } from "next/router";
 
-const FlyInButton = ({ disabled = false }) => {
+const SignUpButton = ({ disabled = false }) => {
   const router = useRouter();
-  
-    const handleClick = () => {
-      if (isLoggedIn() && !hasValidToken()) {
-        // 토큰은 있는데 만료된 경우 (로그인 필요)
-        router.push("/login");
-      } else {
-        // 토큰 자체가 없는 경우 (회원가입 필요)
-        router.push("/createaccount");
-      }
-    };
+
+  const handleClick = () => {
+    router.push("/createaccount");
+  };
 
   return (
     <button
@@ -25,9 +19,9 @@ const FlyInButton = ({ disabled = false }) => {
       onClick={handleClick}
       disabled={disabled}
     >
-      Fly in
+      Create Account
     </button>
   );
 };
 
-export default FlyInButton;
+export default SignUpButton;

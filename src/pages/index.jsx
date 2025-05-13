@@ -1,7 +1,7 @@
 import React from "react";
 import Moodi from "@/components/moodi";
 import FlyInButton from "@/components/buttons/FlyinButton";
-import LoginButton from "@/components/buttons/LoginButton";
+import SignUpButton from "@/components/buttons/SignUpButton";
 
 export default function Home() {
   return (
@@ -14,7 +14,7 @@ export default function Home() {
       {/* 버튼 영역 */}
       <div className="flex flex-col items-center gap-4 z-10">
         <FlyInButton />
-        <LoginButton />
+        <SignUpButton/>
       </div>
     </div>
   );

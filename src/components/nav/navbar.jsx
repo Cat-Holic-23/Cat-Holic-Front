@@ -23,7 +23,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed bottom-0 left-0 w-[390px] h-[88px] flex flex-col items-start gap-2 bg-white rounded-t-xl shadow-[0_-2px_8px_rgba(76,160,255,0.05)] z-50">
+    <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-[390px] h-[88px] flex flex-col items-start gap-2 bg-white rounded-t-xl shadow-[0_-2px_8px_rgba(76,160,255,0.05)] z-50">
       <div className="flex w-full justify-between">
         {MENU.map((menu) => {
           const isActive = router.pathname === menu.path;
@@ -42,11 +42,11 @@ export default function Navbar() {
               <img
                 src={menu.icon}
                 alt={menu.label}
-                className="block w-[32px] h-[32px]"
+                className="block w-[36px] h-[36px]"
                 style={{
                   opacity,
                   transition: "opacity 0.2s",
-                  marginBottom: menu.key === "story" ? "2px" : "6px",
+                  marginBottom: menu.key === "story" ? "4px" : "8px",
                 }}
               />
               <span

@@ -1,55 +1,47 @@
-"use client";
+ {/* 해야할 일 */}
+// 1. 포인트 값 받아오는 api (point.js)
+// 2. nickname 받아오는 api(auth.js)
 
-import { useEffect, useState } from "react";
-import Moodi from "@/components/moodi"; // 마스코트 캐릭터
-import { getUserInfoFromToken } from "@/utils/storage";
-import axios from "@/libs/axios";
-import { useRouter } from "next/navigation";
+import React from "react";
+import Point from "@/components/point";
+import SpeechBubble from "@/components/speech_basci";
+import Moodi from "@/components/moodi";
+import Navbar from "@/components/nav/navbar";
 
-export default function HomePage() {
-  const router = useRouter();
-  const [nickname, setNickname] = useState("Nickname");
-  const [point, setPoint] = useState(0);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const userInfo = getUserInfoFromToken();
-  //       if (userInfo?.nickname) setNickname(userInfo.nickname);
-
-  //       const res = await axios.get("/api/member");
-  //       setPoint(res.data.data.point); // 포인트 받아오기
-  //     } catch (e) {
-  //       console.error("포인트 또는 닉네임 불러오기 실패", e);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
-  const handleComingSoon = () => {
-    console.log("추후개설");
+export default function Home() {
+  const handleSettingClick = () => {
+    alert("Coming Soon");
   };
 
   return (
-    <div className>
-      {/* 상단 영역 */}
-      <div className>
-        <div className>
-          <span>🅟</span>
-          {point}
+    <div className="min-h-screen w-full flex justify-center overflow-hidden">
+      {/* 모바일 뷰 가상 화면 */}
+      <div className="relative w-full max-w-[390px] min-h-screen flex flex-col items-center justify-between px-4">
+        <div className="absolute top-4 left-4 z-10">
+          <Point value={120} />
         </div>
-      </div>
 
-      {/* 말풍선 */}
-      <div className>
-        <div className> Hi {nickname}!</div>
-        <div className></div>
-      </div>
+        <button
+          onClick={handleSettingClick}
+          className="absolute top-4 right-4 w-[36px] h-[36px] z-10"
+        >
+          <img
+            src="/svgs/setting.svg"
+            alt="Setting"
+            className="w-full h-full object-contain"
+          />
+        </button>
 
-      {/* 무디 */}
-      <div className>
-        <Moodi />
+
+        <div className="flex flex-col items-center justify-center flex-grow pt-[60px] pb-[120px]">
+          <SpeechBubble>Hi Nickname!</SpeechBubble>
+          <Moodi />
+        </div>
+
+
+        <div className="w-full flex justify-center">
+          <Navbar />
+        </div>
       </div>
     </div>
   );

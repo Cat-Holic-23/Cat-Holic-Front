@@ -18,7 +18,7 @@ export default function Age({ value, onChange }) {
         onChange={onChange}
         placeholder="Age"
         className="
-          ml-[13px] w-full border-none outline-none font-semibold font-pretendard text-[22px] text-[#424242] bg-transparent
+          ml-[10px] w-full border-none outline-none font-semibold font-pretendard text-[18px] text-[#424242] bg-transparent
           appearance-none
           [&::-webkit-outer-spin-button]:appearance-none
           [&::-webkit-inner-spin-button]:appearance-none
