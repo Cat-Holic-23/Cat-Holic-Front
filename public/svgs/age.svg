@@ -1,0 +1,16 @@
+<svg width="41" height="40" viewBox="0 0 41 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="20.7834" cy="20" r="20" fill="#FFEEC5"/>
+<circle cx="20.8732" cy="19.9946" r="11.9946" fill="white"/>
+<mask id="mask0_195_2777" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="8" width="25" height="24">
+<circle cx="20.8732" cy="19.9946" r="11.9946" fill="white"/>
+</mask>
+<g mask="url(#mask0_195_2777)">
+<ellipse cx="10.0782" cy="9.67965" rx="11.7547" ry="10.7951" fill="#FFCE54"/>
+<ellipse cx="11.7547" cy="10.7951" rx="11.7547" ry="10.7951" transform="matrix(-1 0 0 1 43.423 -1.11548)" fill="#FFCE54"/>
+</g>
+<ellipse cx="9.11859" cy="22.8735" rx="3.11859" ry="2.39892" fill="white"/>
+<ellipse cx="32.628" cy="22.8735" rx="3.11859" ry="2.39892" fill="white"/>
+<circle cx="16.3153" cy="22.6338" r="1.19946" fill="#FFCE54"/>
+<circle cx="25.4313" cy="22.6338" r="1.19946" fill="#FFCE54"/>
+<path d="M22.2925 25.3522C22.2925 25.838 21.6571 26.2318 20.8733 26.2318C20.0895 26.2318 19.4542 25.838 19.4542 25.3522C19.2965 24.8724 20.0895 24.7925 20.8733 24.7925C21.6571 24.7925 22.4501 24.8724 22.2925 25.3522Z" fill="#FFCE54"/>
+</svg>

@@ -1,3 +1,4 @@
+//무디
 import React, { useEffect } from "react";
 
 export default function Moodi() {
@@ -15,10 +16,10 @@ export default function Moodi() {
 
   return (
     <img
-      src="/svgs/Moodi.svg"
+      src="/svgs/Moodi_happy.svg"
       alt="Moodi"
       className="object-contain"
-      style={{ height: "calc(var(--vh, 1vh) * 20)" }}
+      style={{ height: "calc(var(--vh, 1vh) * 75)" }}
     />
   );
 }

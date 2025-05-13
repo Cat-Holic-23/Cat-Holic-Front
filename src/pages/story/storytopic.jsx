@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import Answer from "@/components/story/Answer";
 import MoodiSpeech from "@/components/story/Moodi_Speech";
 import Select from "@/components/story/Select";
@@ -62,12 +62,12 @@ export default function StoryPage() {
 
   return (
     <div
-      className="w-full h-screen flex flex-col justify-between items-center bg-pink-200"
+      className="w-full min-h-screen min-h-[calc(var(--vh,1vh)*100)] flex flex-col justify-center items-center bg-pink-200"
       onClick={handleScreenTouch}
       style={{ cursor: step === 1 ? "pointer" : "default" }}
     >
       {/* 무디 + 말풍선 */}
-      <div className="items-center justify-center w-10 px-8 pt-16 pb-8">
+      <div className="flex flex-col items-center w-full px-4 py-8">
         <MoodiSpeech
           userMsg={userMsg}
           step={step}
