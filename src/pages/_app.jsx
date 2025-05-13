@@ -17,6 +17,26 @@ function MyApp({ Component, pageProps }) {
     return () => window.removeEventListener("resize", setScreenSize);
   }, []);
 
+  useEffect(() => {
+    const whiteBgRoutes = [
+      "/int",
+      "/createaccount",
+      "/login",
+      "/story",
+      "/userInfo",
+    ];
+    if (whiteBgRoutes.includes(router.pathname)) {
+      document.body.style.background = "white";
+      document.body.style.backgroundImage = "none";
+    } else {
+      document.body.style.background =
+        "url('/배경.png') no-repeat center center";
+      document.body.style.backgroundSize = "cover";
+      document.body.style.backgroundRepeat = "no-repeat";
+      document.body.style.backgroundPosition = "center center";
+    }
+  }, [router.pathname]);
+
   return (
     <>
       <Component {...pageProps} />

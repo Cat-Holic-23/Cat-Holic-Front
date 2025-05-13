@@ -14,7 +14,7 @@ export default function Navbar() {
 
   const handleMenuClick = (menu) => {
     if (menu.key === "game" || menu.key === "item") {
-      console.log("Coming Soon");
+      alert("Coming Soon");
       return;
     }
     if (menu.path) {

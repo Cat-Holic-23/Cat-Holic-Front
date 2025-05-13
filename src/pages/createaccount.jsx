@@ -1,6 +1,8 @@
- {/* 해야할 일 */}
+{
+  /* 해야할 일 */
+}
 // 1. userId, userPassword 값 보내기기
-// 2. 이용약관 상세 작업 - pdf 내려 받는걸로 
+// 2. 이용약관 상세 작업 - pdf 내려 받는걸로
 // 3. NextButton 활성화 조건
 
 import React from "react";
@@ -15,7 +17,7 @@ export default function CreateAccount() {
   const router = useRouter();
 
   const handleNext = () => {
-      router.push("/userInfo");
+    router.push("/userInfo");
   };
 
   return (
@@ -38,12 +40,6 @@ export default function CreateAccount() {
           </div>
           <div className="flex items-center space-x-2">
             <span>[필수] Moodi 이용약관</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <span className="text-gray-500">[필수] Moodi 이용약관</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <span className="text-gray-500">[필수] Moodi 이용약관</span>
           </div>
         </div>
       </div>

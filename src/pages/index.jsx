@@ -14,7 +14,7 @@ export default function Home() {
       {/* 버튼 영역 */}
       <div className="flex flex-col items-center gap-4 z-10">
         <FlyInButton />
-        <SignUpButton/>
+        <SignUpButton />
       </div>
     </div>
   );

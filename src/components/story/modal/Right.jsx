@@ -1,74 +1,37 @@
 import React from "react";
 import ContinueButton from "@/components/buttons/ContinueButton";
 
-export default function RightModal({ feedback, onContinue }) {
+export default function Right_Modal({ open, onClose, onContinue }) {
+  if (!open) return null;
+
   return (
     <div
-      style={{
-        borderRadius: "15px 15px 0px 0px",
-        border: "1px solid #000",
-        background: "#FFF",
-        display: "flex",
-        width: "390px",
-        height: "196px",
-        padding: "0px 51px 34px 51px",
-        flexDirection: "column",
-        justifyContent: "flex-end",
-        alignItems: "center",
-        gap: "10px",
-        boxSizing: "border-box",
-      }}
+      className="fixed inset-0 z-50 flex items-end justify-center bg-black/20"
+      onClick={onClose}
     >
-      {/* Good Job + 체크 아이콘 */}
       <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "8px",
-          marginBottom: "6px",
-        }}
+        className="w-[390px] rounded-t-[15px] flex flex-col items-center"
+        onClick={(e) => e.stopPropagation()}
       >
-        <img
-          src="/svgs/check.svg"
-          alt="check"
-          style={{
-            width: "24px",
-            height: "24px",
-            flexShrink: 0,
-          }}
-        />
-        <span
-          style={{
-            color: "#424242",
-            fontFamily: "Pretendard, sans-serif",
-            fontSize: "28px",
-            fontStyle: "normal",
-            fontWeight: 700,
-            lineHeight: "140%",
-            letterSpacing: "-0.56px",
-          }}
-        >
-          Good Job!
-        </span>
+        <div className="w-[390px] h-[196px] rounded-t-[15px] border border-black bg-white flex flex-col justify-end items-center gap-[10px] flex-shrink-0 px-[51px] pb-[34px]">
+          <div className="flex flex-row items-center justify-center mb-1 mt-6">
+            <img src="/svgs/check.svg" alt="check" className="w-8 h-8 mr-2" />
+            <span className="text-[#424242] font-pretendard font-bold text-[28px] leading-[140%] tracking-[-0.56px]">
+              Good Job!
+            </span>
+          </div>
+          <div className="text-[#424242] font-pretendard font-medium text-[16px] text-center mb-4">
+            NN waits until the friend is done
+          </div>
+          <ContinueButton
+            className="w-full max-w-[288px] mt-2"
+            onClick={() => {
+              alert("Coming Soon");
+              if (onContinue) onContinue();
+            }}
+          />
+        </div>
       </div>
-      {/* 피드백 텍스트 */}
-      <div
-        style={{
-          color: "#424242",
-          fontFamily: "Pretendard, sans-serif",
-          fontSize: "20px",
-          fontStyle: "normal",
-          fontWeight: 600,
-          lineHeight: "140%",
-          letterSpacing: "-0.4px",
-          marginBottom: "28px",
-          textAlign: "center",
-        }}
-      >
-        {feedback}
-      </div>
-      {/* CONTINUE 버튼 */}
-      <ContinueButton onClick={onContinue} />
     </div>
   );
 }

@@ -1,8 +1,9 @@
- {/* 해야할 일 */}
-// 1. 로그인 토큰 보내기 
+{
+  /* 해야할 일 */
+}
+// 1. 로그인 토큰 보내기
 // 2. 로그인 토큰 받아오기기
 // 3. 로그인 창 접근시 토큰 존재 -> 바로 홈(이거 아마 로그인 버튼에 구현해놓음음)
-
 
 import React from "react";
 import MiniTitle from "@/components/minititle/minititle";

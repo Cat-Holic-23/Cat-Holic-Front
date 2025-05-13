@@ -25,7 +25,7 @@ export default function BoyGirl({ value, onChange }) {
             key={option.key}
             onClick={() => onChange(option.key)}
             className={`
-              flex items-center justify-start gap-[10px] w-[162px] h-[58px] py-[9px] px-0 rounded-[15px]
+              flex items-center justify-start gap-[8px] w-[160px] h-[58px] py-[9px] px-0 rounded-[15px]
               bg-white shadow-[0px_4px_0px_0px_rgba(255,179,0,0.20)]
               cursor-pointer transition-colors duration-200 font-pretendard
               ${selected ? "border-[2px]" : "border"}

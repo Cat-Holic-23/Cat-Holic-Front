@@ -28,9 +28,9 @@ const categories = [
   },
 ];
 
-const RADIUS = 180;
-const CENTER = 200;
-const ITEM_SIZE = 132;
+const RADIUS = 110;
+const CENTER = 160;
+const ITEM_SIZE = 88;
 const CATEGORY_COUNT = categories.length;
 const ANGLE_STEP = 360 / CATEGORY_COUNT;
 
@@ -111,7 +111,7 @@ export default function InterestSpinner() {
   return (
     <div
       className="relative mx-auto touch-none select-none"
-      style={{ width: 400, height: 400 }}
+      style={{ width: 320, height: 320, marginTop: "16px" }}
       onMouseDown={handleMouseDown}
       onTouchStart={handleTouchStart}
       onWheel={handleWheel}
