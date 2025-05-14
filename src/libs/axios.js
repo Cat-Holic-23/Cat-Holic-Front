@@ -1,8 +1,7 @@
-// 커스텀 axios 인스턴스 API 요청청
 import axios from "axios";
-import { getAccessToken } from "../utils/storage";
+import { getAccessToken } from "@/utils/storage";
 
-//axios 새로 생성성
+//axios 커스텀
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   headers: {
@@ -11,10 +10,15 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-// 요청청 토큰을 헤더에 붙임 - 로그인 후 자동으로 인증 처리
+// join login빼고 다 헤더에 토큰 
 instance.interceptors.request.use((config) => {
+  if (config.url === "/join" || config.url === "/login") {
+    delete config.headers.Authorization;
+    return config;
+  }
   const token = getAccessToken();
   if (token) {
+    console.log("Interceptor - Authorization:", token);
     config.headers.Authorization = token;
   }
   return config;
