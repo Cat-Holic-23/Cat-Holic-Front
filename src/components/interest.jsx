@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 const categories = [
   {
@@ -28,152 +28,137 @@ const categories = [
   },
 ];
 
-const RADIUS = 110;
-const CENTER = 160;
-const ITEM_SIZE = 88;
-const CATEGORY_COUNT = categories.length;
-const ANGLE_STEP = 360 / CATEGORY_COUNT;
+export { categories };
 
-export default function InterestSpinner() {
-  const [angle, setAngle] = useState(0);
-  const [hovered, setHovered] = useState(null);
-  const [topIdx, setTopIdx] = useState(0);
-  const dragging = useRef(false);
-  const lastX = useRef(0);
+export default function InterestSpinner({ value = [], onChange, onSpinNext }) {
+  const [centerIdx, setCenterIdx] = useState(0);
+  const selected = value;
 
-  const startDrag = (clientX) => {
-    dragging.current = true;
-    lastX.current = clientX;
-  };
-
-  const moveDrag = (clientX) => {
-    if (!dragging.current) return;
-    const dx = clientX - lastX.current;
-    setAngle((prev) => prev + dx * 0.7);
-    lastX.current = clientX;
-  };
-
-  const stopDrag = () => {
-    dragging.current = false;
-    snapToNearest();
-  };
-
-  const handleMouseDown = (e) => startDrag(e.clientX);
-  const handleMouseMove = (e) => moveDrag(e.clientX);
-  const handleMouseUp = stopDrag;
-  const handleTouchStart = (e) => startDrag(e.touches[0].clientX);
-  const handleTouchMove = (e) => moveDrag(e.touches[0].clientX);
-  const handleTouchEnd = stopDrag;
-
-  const handleWheel = (e) => {
-    e.preventDefault();
-    const direction = e.deltaY > 0 ? 1 : -1;
-    setAngle((prev) => {
-      const newAngle = prev - direction * ANGLE_STEP;
-      setTimeout(() => {
-        snapToNearest(newAngle);
-      }, 180);
-      return newAngle;
-    });
-  };
+  // 한 칸씩 오른쪽으로만 회전
+  const spinNext = () => setCenterIdx((prev) => (prev + 1) % categories.length);
 
   useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
-    window.addEventListener("touchmove", handleTouchMove);
-    window.addEventListener("touchend", handleTouchEnd);
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
-      window.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("touchend", handleTouchEnd);
-    };
-  }, []);
-
-  function snapToNearest(targetAngle = angle) {
-    let minDiff = 360;
-    let nearestIdx = 0;
-    let nearestTheta = 0;
-    for (let i = 0; i < CATEGORY_COUNT; i++) {
-      let theta = (ANGLE_STEP * i + targetAngle) % 360;
-      let diff = Math.abs((((theta - 270) % 360) + 360) % 360);
-      if (diff < minDiff) {
-        minDiff = diff;
-        nearestIdx = i;
-        nearestTheta = theta;
-      }
+    if (onSpinNext) {
+      onSpinNext.current = spinNext;
     }
-    let adjust = 270 - nearestTheta;
-    setAngle(targetAngle + adjust);
-    setTopIdx(nearestIdx);
-  }
+  }, [onSpinNext, spinNext]);
+
+  // 중앙 항목 클릭 시 선택/해제
+  const handleCenterClick = (e) => {
+    e.stopPropagation();
+    const key = categories[centerIdx].key;
+    let next;
+    if (selected.includes(key)) {
+      next = selected.filter((k) => k !== key);
+    } else {
+      next = [...selected, key];
+    }
+    onChange(next);
+  };
+
+  // 스피너 아무 곳이나 터치/클릭 시 오른쪽으로만 회전
+  const handleAnyTouch = (e) => {
+    if (e.target.closest("button")) return;
+    spinNext();
+  };
+
+  const getVisible = () => {
+    const len = categories.length;
+    return [
+      categories[(centerIdx - 1 + len) % len],
+      categories[centerIdx],
+      categories[(centerIdx + 1) % len],
+    ];
+  };
+
+  const visible = getVisible();
+
+  const positions = [
+    { left: 0, top: 44, scale: 0.8, opacity: 0.6, zIndex: 1 },
+    { left: 116, top: 0, scale: 1.1, opacity: 1, zIndex: 2 },
+    { left: 232, top: 44, scale: 0.8, opacity: 0.6, zIndex: 1 },
+  ];
 
   return (
     <div
-      className="relative mx-auto touch-none select-none"
-      style={{ width: 320, height: 320, marginTop: "16px" }}
-      onMouseDown={handleMouseDown}
-      onTouchStart={handleTouchStart}
-      onWheel={handleWheel}
+      className="relative mx-auto flex justify-center items-center"
+      style={{ width: 320, height: 140, marginTop: 16 }}
+      onClick={handleAnyTouch}
+      onTouchEnd={handleAnyTouch}
     >
-      {categories.map((cat, idx) => {
-        const theta = (ANGLE_STEP * idx + angle) % 360;
-        const rad = (theta * Math.PI) / 180;
-        const x = CENTER + RADIUS * Math.cos(rad) - ITEM_SIZE / 2;
-        const y = CENTER + RADIUS * Math.sin(rad) - ITEM_SIZE / 2;
-        const diff = Math.abs((((theta - 270) % 360) + 360) % 360);
-        const scale = diff < 60 ? 1.1 : diff < 120 ? 0.95 : 0.8;
-        const opacity = diff < 90 ? 1 : 0.4;
-        const zIndex = 1000 - diff;
-        const isHovered = hovered === idx || topIdx === idx;
+      {visible.map((cat, idx) => {
+        const isCenter = idx === 1;
+        const isSelected = selected.includes(cat.key);
+        const position = positions[idx];
 
         return (
           <div
             key={cat.key}
-            className="absolute flex flex-col items-center justify-center rounded-full shadow-md cursor-grab"
+            className="absolute flex flex-col items-center justify-center rounded-full shadow-md"
             style={{
-              left: x,
-              top: y,
-              width: ITEM_SIZE,
-              height: ITEM_SIZE,
+              left: position.left,
+              top: position.top,
+              width: 88,
+              height: 88,
               background: cat.color,
-              transform: `scale(${scale})`,
-              opacity,
-              zIndex,
-              transition: dragging.current
-                ? "none"
-                : "transform 0.3s, opacity 0.3s",
-              willChange: "transform, opacity",
+              transform: `scale(${position.scale})`,
+              opacity: position.opacity,
+              zIndex: position.zIndex,
+              border: isSelected ? "3px solid #FFD600" : "none",
+              transition: "all 0.2s cubic-bezier(.4,0,.2,1)",
+              cursor: "pointer",
+              boxShadow: isCenter ? "0 4px 16px rgba(0,0,0,0.08)" : "none",
             }}
-            onMouseEnter={() => setHovered(idx)}
-            onMouseLeave={() => setHovered(null)}
-            onTouchStart={() => setHovered(idx)}
-            onTouchEnd={() => setHovered(null)}
+            // 중앙(hover)만 선택/해제, 좌우는 아무 동작 없음
+            onClick={(e) => {
+              e.stopPropagation();
+              if (isCenter) handleCenterClick(e);
+            }}
+            onTouchEnd={(e) => {
+              e.stopPropagation();
+              if (isCenter) handleCenterClick(e);
+            }}
           >
             <img
               src={cat.icon}
               alt={cat.label}
-              className="pointer-events-none object-contain"
               style={{
-                width: 56,
-                height: 56,
-                marginBottom: isHovered ? 8 : 0,
-                transition: "margin-bottom 0.2s",
+                width: isCenter ? 40 : 56,
+                height: isCenter ? 40 : 56,
+                marginBottom: isCenter ? 6 : 0,
               }}
             />
             <span
-              className="font-semibold text-white text-center text-[18px] leading-[140%] tracking-[-0.4px] pointer-events-none"
+              className="font-semibold text-white text-center"
               style={{
-                fontFamily: "Pretendard, sans-serif",
-                textShadow: "0 2px 8px rgba(0,0,0,0.08)",
-                opacity: isHovered ? 1 : 0,
-                height: isHovered ? "22px" : 0,
+                fontSize: isCenter ? 14 : 0,
+                fontWeight: isCenter ? 600 : 400,
+                lineHeight: "120%",
+                letterSpacing: "-0.3px",
+                opacity: isCenter ? 1 : 0,
+                height: isCenter ? "18px" : 0,
                 transition: "opacity 0.2s, height 0.2s",
                 overflow: "hidden",
+                textAlign: "center",
               }}
             >
-              {cat.label}
+              {isCenter && cat.label}
             </span>
+            {isSelected && (
+              <img
+                src="/svgs/check.svg"
+                alt="선택됨"
+                style={{
+                  position: "absolute",
+                  right: 3,
+                  bottom: 1,
+                  width: 24,
+                  height: 24,
+                  background: "#fff",
+                  borderRadius: "50%",
+                }}
+              />
+            )}
           </div>
         );
       })}
