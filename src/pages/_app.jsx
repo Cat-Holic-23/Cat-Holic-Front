@@ -24,6 +24,7 @@ function MyApp({ Component, pageProps }) {
       "/login",
       "/story",
       "/userInfo",
+      "/login"
     ];
     if (whiteBgRoutes.includes(router.pathname)) {
       document.body.style.background = "white";
