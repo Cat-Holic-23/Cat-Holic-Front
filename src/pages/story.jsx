@@ -8,31 +8,41 @@ import Select from "@/components/story/Select";
 import Right_Modal from "@/components/story/modal/Right";
 import Wrong_Modal from "@/components/story/modal/Wrong";
 import Point_Modal from "@/components/story/modal/Point";
-
-const MOCK_SOCIAL_STORY =
-  "This is a mock social situation story generated based on the topic.";
-const MOCK_SOCIAL_QUERY = "What do you think about this situation?";
-const MOCK_OPTIONS = [
-  "예시 1",
-  "조금 긴 에시 2",
-  "하 이거 언제 다하냐냐",
-  "Take the swing",
-];
+import { saveResult, updateResult } from "@/components/apis/answer";
+import { generateStory } from "@/components/apis/story";
+import { checkStory } from "@/components/apis/story";
 
 export default function Story() {
   const [step, setStep] = useState(1);
   const [topic, setTopic] = useState("");
-  const [socialStory, setSocialStory] = useState(MOCK_SOCIAL_STORY);
-  const [socialQuery, setSocialQuery] = useState(MOCK_SOCIAL_QUERY);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [options, setOptions] = useState([]);
+  const [socialStory, setSocialStory] = useState("");
+  const [socialQuery, setSocialQuery] = useState("");
   const [showRightModal, setShowRightModal] = useState(false);
   const [showWrongModal, setShowWrongModal] = useState(false);
   const [showPointModal, setShowPointModal] = useState(false);
+  const [selectedAnswer, setSelectedAnswer] = useState([]);
+  const [storyId, setStoryId] = useState(null);
+  const [correctAnswer, setCorrectAnswer] = useState("");
+  const [explanation, setExplanation] = useState("");
+  const [storyData, setStoryData] = useState(null);
+  const [resultId, setResultId] = useState(null);
 
   // 1. 사용자가 채팅 입력 후 send
-  const handleSendTopic = (msg) => {
+  const handleSendTopic = async (msg) => {
     setTopic(msg);
-    setStep(2);
+    try {
+      const data = await generateStory(msg);
+      setStoryData(data);
+      setSocialStory(data.story);
+      setSocialQuery(data.question);
+      setOptions(data.choices);
+      setStoryId(data.id);
+      setCorrectAnswer(data.correct_answer);
+      setStep(2);
+    } catch (e) {
+      alert("이야기 생성에 실패했습니다.");
+    }
   };
 
   // 2. 사회상황 이야기 끝나면(화면 클릭)
@@ -43,17 +53,10 @@ export default function Story() {
   // 3. 질의 끝나면 2초 뒤 step 4
   useEffect(() => {
     if (step === 3) {
-      const timer = setTimeout(() => setStep(4), 3000);
+      const timer = setTimeout(() => setStep(4), 1000);
       return () => clearTimeout(timer);
     }
   }, [step]);
-
-  // 4. 답변 선택
-  const handleSelect = (option, idx) => {
-    setSelectedAnswer(idx);
-    if (idx === 0) setShowRightModal(true);
-    else setShowWrongModal(true);
-  };
 
   const handleContinue = () => {
     setShowRightModal(false);
@@ -61,83 +64,146 @@ export default function Story() {
     setShowPointModal(true);
   };
 
+  const handleAnswer = async (userAnswer) => {
+    if (!storyData) {
+      alert("문제가 생성되지 않았습니다.");
+      return;
+    }
+
+    // 1. 결과 저장 (POST /results)
+    let resultData;
+    try {
+      resultData = await saveResult({
+        story: storyData.story,
+        question: storyData.question,
+        choices: storyData.choices,
+        answer: storyData.correct_answer,
+        userInput: userAnswer,
+      });
+      setResultId(resultData.id); // 반드시 저장!
+    } catch (e) {
+      alert("답변 저장에 실패했습니다.");
+      return;
+    }
+
+    // 2. 해설/정답 확인 (POST /gemini/{id})
+    try {
+      const aiResult = await checkStory(resultData.id);
+      setExplanation(aiResult.explanation);
+
+      if (
+        aiResult.correct_answer.trim().toLowerCase() ===
+        userAnswer.trim().toLowerCase()
+      ) {
+        setShowRightModal(true);
+      } else {
+        setShowWrongModal(true);
+      }
+    } catch (e) {
+      setExplanation("해설을 불러오지 못했습니다.");
+      setShowWrongModal(true);
+    }
+  };
+
+  const handleUpdateAnswer = async (newUserInput) => {
+    if (!resultId || !storyData) return;
+    try {
+      await updateResult(resultId, {
+        id: resultId,
+        story: storyData.story,
+        question: storyData.question,
+        choices: storyData.choices,
+        answer: storyData.correct_answer,
+        userInput: newUserInput,
+      });
+    } catch (e) {
+      alert("답변 수정에 실패했습니다.");
+    }
+  };
+
   return (
-    <div className="relative min-h-screen w-full flex flex-col items-center bg-white">
+    <div className="relative min-h-screen w-full flex flex-col items-center bg-white overflow-hidden">
       {/* 상단 MiniTitle 고정 */}
       <div className="fixed top-0 left-0 w-full flex justify-center z-10 pt-10 pb-4 bg-white">
-        {step > 1 && <MiniTitle>story</MiniTitle>}
+        <MiniTitle>story</MiniTitle>
       </div>
 
-      {/* 중앙 Moodi + 말풍선/입력/선택 */}
-      <div className="flex flex-col items-center justify-center w-full max-w-md flex-1 pt-[100px] pb-[140px]">
+      {/* 중앙 컨텐츠 */}
+      <div className="flex flex-col items-center w-full max-w-md flex-1 pt-[80px] pb-[40px]">
         <div className="w-full flex flex-col items-center space-y-4">
           {/* step 1: 토픽 입력 */}
           {step === 1 && (
             <>
               <SpeechBubble>What topic do you want to talk</SpeechBubble>
-              {/* step 4만 MoodiFace, 나머지는 Moodi */}
-              {step === 4 ? <MoodiFace /> : <Moodi />}
-              <ChatInput
-                onSend={handleSendTopic}
-                placeholder="Type your topic..."
-              />
-              <div className="mb-8"></div>
+              <Moodi style={{ width: 120, height: 120 }} />
             </>
           )}
-
-          {/* step 2: 사회상황 이야기 (클릭 시 step 3) */}
           {step === 2 && (
             <div
               onClick={handleStoryClick}
               className="w-full flex flex-col items-center cursor-pointer"
+              style={{ minHeight: 400 }}
             >
-              <SpeechBubble>
-                {/* 실제론 topic 기반, 지금은 목업 */}
-                {socialStory}
-              </SpeechBubble>
-              {step === 4 ? <MoodiFace /> : <Moodi />}
+              <SpeechBubble>{socialStory}</SpeechBubble>
+              <Moodi style={{ width: 120, height: 120 }} />
             </div>
           )}
-
-          {/* step 3: 사회상황 질의*/}
           {step === 3 && (
             <>
               <SpeechBubble>{socialQuery}</SpeechBubble>
-              {step === 4 ? <MoodiFace /> : <Moodi />}
+              <Moodi style={{ width: 120, height: 120 }} />
             </>
           )}
-
-          {/* step 4: 답변 선택/입력 */}
           {step === 4 && (
             <>
               <SpeechBubble>{socialQuery}</SpeechBubble>
-              {step === 4 ? <MoodiFace /> : <Moodi />}
-              <Select options={MOCK_OPTIONS} onSelect={handleSelect} />
-              <ChatInput
-                onSend={(msg) => {
-                  /* 답변 채팅 처리 */
-                }}
-                placeholder="You can enter it yourself"
-              />
+              <MoodiFace style={{ width: 120, height: 120 }} />
+              {/* 4지선다와 채팅박스를 같은 flow에 배치 */}
+              <div className="w-full flex flex-col items-center gap-3 mt-4">
+                <Select
+                  options={storyData?.choices || []}
+                  onSelect={handleAnswer}
+                />
+                <ChatInput
+                  onSend={handleAnswer}
+                  placeholder="You can enter it yourself"
+                />
+              </div>
             </>
           )}
         </div>
       </div>
-      {/* 정답 모달 */}
+
+      {/* step 1일 때만 ChatInput을 하단에 fixed로 고정 */}
+      {step === 1 && (
+        <div
+          className="fixed left-1/2 bottom-16 z-20 w-full max-w-md px-4 flex flex-col items-center"
+          style={{ transform: "translateX(-50%)" }}
+        >
+          <ChatInput
+            onSend={handleSendTopic}
+            placeholder="Type your topic..."
+          />
+        </div>
+      )}
+
+      {/* 모달들 */}
       <Right_Modal
         open={showRightModal}
         onClose={() => setShowRightModal(false)}
         onContinue={handleContinue}
+        explanation={explanation}
       />
       <Wrong_Modal
         open={showWrongModal}
         onClose={() => setShowWrongModal(false)}
         onContinue={handleContinue}
+        explanation={explanation}
       />
       <Point_Modal
         open={showPointModal}
         onClose={() => setShowPointModal(false)}
-        point={100} // 목업 포인트
+        point={30}
       />
     </div>
   );
