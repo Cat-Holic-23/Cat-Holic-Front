@@ -4,6 +4,24 @@ import ContinueButton from "@/components/buttons/ContinueButton";
 export default function Right_Modal({ open, onClose, onContinue }) {
   if (!open) return null;
 
+  const getFontSize = (text) => {
+    const length = text ? text.length : 0;
+    if (length < 50) return "text-[16px]";
+    if (length < 100) return "text-[14px]";
+    if (length < 150) return "text-[12px]";
+    return "text-[10px]";
+  };
+
+  const getModalHeight = (text) => {
+    const length = text ? text.length : 0;
+    if (length < 100) return "h-[196px]";
+    if (length < 150) return "h-[220px]";
+    return "h-[250px]";
+  };
+
+  const fontSizeClass = getFontSize(explanation);
+  const modalHeightClass = getModalHeight(explanation);
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-end justify-center bg-black/20"
@@ -13,20 +31,24 @@ export default function Right_Modal({ open, onClose, onContinue }) {
         className="w-[390px] rounded-t-[15px] flex flex-col items-center"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="w-[390px] h-[196px] rounded-t-[15px] border border-black bg-white flex flex-col justify-end items-center gap-[10px] flex-shrink-0 px-[51px] pb-[34px]">
+        <div
+          className={`w-[390px] ${modalHeightClass} rounded-t-[15px] border border-black bg-white flex flex-col justify-end items-center gap-[10px] flex-shrink-0 px-[51px] pb-[34px]`}
+        >
           <div className="flex flex-row items-center justify-center mb-1 mt-6">
-            <img src="/svgs/check.svg" alt="check" className="w-8 h-8 mr-2" />
+            <img src="/svgs/check.svg" alt="right" className="w-8 h-8 mr-2" />
             <span className="text-[#424242] font-pretendard font-bold text-[28px] leading-[140%] tracking-[-0.56px]">
-              Good Job!
+              Good job!
             </span>
           </div>
-          <div className="text-[#424242] font-pretendard font-medium text-[16px] text-center mb-4">
-            NN waits until the friend is done
+          <div
+            className={`text-[#424242] font-pretendard font-medium text-center mb-4 ${fontSizeClass} break-words`}
+            style={{ wordBreak: "break-word" }}
+          >
+            {explanation || "NN waits until the friend is done"}
           </div>
           <ContinueButton
             className="w-full max-w-[288px] mt-2"
             onClick={() => {
-              alert("Coming Soon");
               if (onContinue) onContinue();
             }}
           />

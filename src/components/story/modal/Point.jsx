@@ -1,12 +1,31 @@
 import React from "react";
 import { useRouter } from "next/router";
+import { addPoint } from "@/components/apis/point";
 
-export default function Point_Modal({ open, onClose, point = 100 }) {
+export default function Point_Modal({ open, onClose, point = 30 }) {
   const router = useRouter();
 
   if (!open) return null;
 
-  return (
+  const handleGoHome = async () => {
+    try {
+      await addPoint(point); 
+    } catch (e) {
+      console.error("포인트 적립 실패", e);
+    }
+    router.push("/home");
+  };
+
+  const handleGoItem = async () => {
+    try {
+      await addPoint(point);
+    } catch (e) {
+      console.error("포인트 적립 실패", e);
+    }
+    router.push("/home"); 
+  };
+
+    return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/20"
       onClick={onClose}
@@ -39,7 +58,7 @@ export default function Point_Modal({ open, onClose, point = 100 }) {
               rounded-[15px] bg-gradient-to-r from-[#FFB932] to-[#FD723FCC] shadow-[0_4px_0_0_#F2712C]
               font-pretendard font-semibold text-[18px] text-white
             "
-            onClick={() => router.push("/home")}
+            onClick={handleGoHome}
           >
             Home
           </button>
@@ -50,10 +69,7 @@ export default function Point_Modal({ open, onClose, point = 100 }) {
               rounded-[15px] bg-[#FFF7E7] shadow-[0_4px_0_0_#E37730]
               font-pretendard font-semibold text-[18px] text-[#FFB932]
             "
-            onClick={() => {
-              alert("Coming Soon");
-              router.push("/home");
-            }}
+            onClick={handleGoItem}
           >
             Item
           </button>
