@@ -34,7 +34,7 @@ const ChatInput = ({ onSend, placeholder = "Etc." }) => {
         placeholder={placeholder}
         className="
           flex-1 bg-transparent outline-none border-none 
-          text-[18px] text-[#222] placeholder:text-[#aaa] font-pretendard
+          text-[16px] text-[#222] placeholder:text-[#aaa] font-pretendard
         "
       />
       <button

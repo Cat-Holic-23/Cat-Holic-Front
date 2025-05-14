@@ -1,7 +1,5 @@
 import React from "react";
 
-const COLOR = "#FFB932"; // 강조 색상 (선택 시 border에 사용)
-
 export default function BoyGirl({ value, onChange }) {
   const options = [
     {
@@ -26,15 +24,11 @@ export default function BoyGirl({ value, onChange }) {
             onClick={() => onChange(option.key)}
             className={`
               flex items-center justify-start gap-[8px] w-[160px] h-[58px] py-[9px] px-0 rounded-[15px]
-              bg-white shadow-[0px_4px_0px_0px_rgba(255,179,0,0.20)]
+              border border-[rgba(255,179,0,0.20)]
+              shadow-[0px_4px_0px_0px_rgba(255,179,0,0.20)]
               cursor-pointer transition-colors duration-200 font-pretendard
-              ${selected ? "border-[2px]" : "border"}
-              ${
-                selected
-                  ? "border-[#FFB932] font-bold"
-                  : "border-white font-medium"
-              }
-              text-[#424242] font-[Pretendard] 
+              ${selected ? "bg-[#D1F4AA] font-bold" : "bg-white font-medium"}
+              hover:bg-[#D1F4AA]
             `}
           >
             <span className="w-[32px] h-[32px] flex items-center justify-center ml-[13px] shrink-0">

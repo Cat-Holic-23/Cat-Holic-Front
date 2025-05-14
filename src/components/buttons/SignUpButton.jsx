@@ -11,8 +11,8 @@ const SignUpButton = ({ disabled = false }) => {
   return (
     <button
       className={`
-        w-[314px] h-[55px] rounded-full border-none text-white text-[20px] font-bold 
-        transition-all duration-200 font-pretendard
+        w-[314px] h-[55px] rounded-full border-none text-white text-[18px] font-medium
+        transition-all duration-200 font-fredoka
         ${
           disabled
             ? "bg-[#BBB] shadow-[0px_4px_0px_0px_#7F7F7F] cursor-not-allowed opacity-60"
@@ -22,7 +22,7 @@ const SignUpButton = ({ disabled = false }) => {
       onClick={handleClick}
       disabled={disabled}
     >
-      Create Account
+      CREATE ACCOUNT
     </button>
   );
 };

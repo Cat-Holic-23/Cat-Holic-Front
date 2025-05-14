@@ -32,7 +32,7 @@ export default function Login() {
           />
         </div>
 
-        {/* 로그인인 버튼 */}
+        {/* 로그인 버튼 */}
         <div className="absolute bottom-[36px] w-full flex justify-center">
           <LoginButton
             userId={userId}

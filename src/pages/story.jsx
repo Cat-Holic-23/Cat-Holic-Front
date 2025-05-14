@@ -11,6 +11,8 @@ import Point_Modal from "@/components/story/modal/Point";
 import { saveResult, updateResult } from "@/components/apis/answer";
 import { generateStory } from "@/components/apis/story";
 import { checkStory } from "@/components/apis/story";
+import StoryLoading from "@/components/story/Loading";
+
 
 export default function Story() {
   const [step, setStep] = useState(1);
@@ -27,10 +29,14 @@ export default function Story() {
   const [explanation, setExplanation] = useState("");
   const [storyData, setStoryData] = useState(null);
   const [resultId, setResultId] = useState(null);
+  const [isStoryLoading, setIsStoryLoading] = useState(false);
+
+
 
   // 1. 사용자가 채팅 입력 후 send
   const handleSendTopic = async (msg) => {
     setTopic(msg);
+    setIsStoryLoading(true);
     try {
       const data = await generateStory(msg);
       setStoryData(data);
@@ -42,9 +48,10 @@ export default function Story() {
       setStep(2);
     } catch (e) {
       alert("이야기 생성에 실패했습니다.");
+    } finally {
+      setIsStoryLoading(false);
     }
   };
-
   // 2. 사회상황 이야기 끝나면(화면 클릭)
   const handleStoryClick = () => {
     if (step === 2) setStep(3);
@@ -64,7 +71,7 @@ export default function Story() {
     setShowPointModal(true);
   };
 
-  const handleAnswer = async (userAnswer) => {
+ const handleAnswer = async (userAnswer) => {
     if (!storyData) {
       alert("문제가 생성되지 않았습니다.");
       return;
@@ -124,17 +131,15 @@ export default function Story() {
   return (
     <div className="relative min-h-screen w-full flex flex-col items-center bg-white overflow-hidden">
       <div className="fixed top-0 left-0 w-full flex justify-center z-10 pt-10 pb-4 bg-white">
-        <MiniTitle>story</MiniTitle>
+        <MiniTitle>Story</MiniTitle>
       </div>
-
 
       <div className="flex flex-col items-center w-full max-w-md flex-1 pt-[80px] pb-[40px]">
         <div className="w-full flex flex-col items-center space-y-4">
-
           {step === 1 && (
             <>
-              <SpeechBubble>What topic do you want to talk</SpeechBubble>
-              <Moodi style={{ width: 120, height: 120 }} />
+              <SpeechBubble>What topic do you want to talk about</SpeechBubble>
+              <Moodi style={{ width: 120, height: 120 }} className="animate-float2"/>
             </>
           )}
           {step === 2 && (
@@ -144,20 +149,20 @@ export default function Story() {
               style={{ minHeight: 400 }}
             >
               <SpeechBubble>{socialStory}</SpeechBubble>
-              <Moodi style={{ width: 120, height: 120 }} />
+              <Moodi style={{ width: 120, height: 120 }} className="animate-float2"/>
             </div>
           )}
           {step === 3 && (
             <>
               <SpeechBubble>{socialQuery}</SpeechBubble>
-              <Moodi style={{ width: 120, height: 120 }} />
+              <Moodi style={{ width: 120, height: 120 }} className="animate-float2" />
             </>
           )}
           {step === 4 && (
             <>
               <SpeechBubble>{socialQuery}</SpeechBubble>
-              <MoodiFace style={{ width: 120, height: 120 }} />
-              <div className="w-full flex flex-col items-center gap-3 mt-4">
+              <MoodiFace tyle={{ width: 120, height: 120 }} className="animate-float2"/>
+              <div className="w-full flex flex-col items-center gap-3 mt-4 ">
                 <Select
                   options={storyData?.choices || []}
                   onSelect={handleAnswer}
@@ -184,6 +189,7 @@ export default function Story() {
         </div>
       )}
 
+      {isStoryLoading && <StoryLoading />}
 
       <Right_Modal
         open={showRightModal}

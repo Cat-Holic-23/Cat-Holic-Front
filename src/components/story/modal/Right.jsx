@@ -1,7 +1,8 @@
 import React from "react";
 import ContinueButton from "@/components/buttons/ContinueButton";
 
-export default function Right_Modal({ open, onClose, onContinue }) {
+
+export default function Right_Modal({ open, onClose, onContinue, explanation }) {
   if (!open) return null;
 
   const getFontSize = (text) => {
@@ -12,17 +13,12 @@ export default function Right_Modal({ open, onClose, onContinue }) {
     return "text-[10px]";
   };
 
-  const getModalHeight = (text) => {
-    const length = text ? text.length : 0;
-    if (length < 100) return "h-[196px]";
-    if (length < 150) return "h-[220px]";
-    return "h-[250px]";
-  };
+
 
   const fontSizeClass = getFontSize(explanation);
-  const modalHeightClass = getModalHeight(explanation);
 
-  return (
+
+ return (
     <div
       className="fixed inset-0 z-50 flex items-end justify-center bg-black/20"
       onClick={onClose}
@@ -31,9 +27,7 @@ export default function Right_Modal({ open, onClose, onContinue }) {
         className="w-[390px] rounded-t-[15px] flex flex-col items-center"
         onClick={(e) => e.stopPropagation()}
       >
-        <div
-          className={`w-[390px] ${modalHeightClass} rounded-t-[15px] border border-black bg-white flex flex-col justify-end items-center gap-[10px] flex-shrink-0 px-[51px] pb-[34px]`}
-        >
+        <div className="w-[390px] max-h-[460px] min-h-[180px] rounded-t-[15px] border border-black bg-white flex flex-col justify-end items-center gap-[10px] flex-shrink-0 px-[51px] pb-[34px] overflow-y-auto">
           <div className="flex flex-row items-center justify-center mb-1 mt-6">
             <img src="/svgs/check.svg" alt="right" className="w-8 h-8 mr-2" />
             <span className="text-[#424242] font-pretendard font-bold text-[28px] leading-[140%] tracking-[-0.56px]">

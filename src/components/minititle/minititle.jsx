@@ -6,7 +6,7 @@ const MiniTitle = ({ children, style }) => {
       className="
         inline-flex items-center justify-center gap-[10px] 
         px-[15px] py-[3px] rounded-[15px] 
-        bg-[#FFB300] text-white 
+        bg-[#FFCE54] text-white 
         font-pretendard text-[16px] font-semibold 
         leading-[140%] tracking-[-0.32px]
       "

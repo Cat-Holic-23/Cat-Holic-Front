@@ -3,26 +3,31 @@ import React, { useState, useEffect } from "react";
 const categories = [
   {
     key: "painting",
-    label: "그림그리기",
+    label: "DRAWING",
     icon: "/svgs/painting.svg",
     color: "#A0D468",
   },
   {
     key: "music",
-    label: "음악듣기",
+    label: "MUSIC",
     icon: "/svgs/music.svg",
     color: "#FF6D7C",
   },
-  { key: "sleep", label: "잠자기", icon: "/svgs/sleep.svg", color: "#5D9BEC" },
+  {
+    key: "sleep",
+    label: "SLEEPING",
+    icon: "/svgs/sleep.svg",
+    color: "#5D9BEC",
+  },
   {
     key: "piano",
-    label: "피아노치기",
+    label: "PIANO",
     icon: "/svgs/piano.svg",
     color: "#FFCE54",
   },
   {
     key: "gaming",
-    label: "게임하기",
+    label: "PLAY GAMES",
     icon: "/svgs/gaming.svg",
     color: "#AC92ED",
   },
@@ -98,8 +103,8 @@ export default function InterestSpinner({ value = [], onChange, onSpinNext }) {
             style={{
               left: position.left,
               top: position.top,
-              width: 88,
-              height: 88,
+              width: 105,
+              height: 105,
               background: cat.color,
               transform: `scale(${position.scale})`,
               opacity: position.opacity,
@@ -109,7 +114,6 @@ export default function InterestSpinner({ value = [], onChange, onSpinNext }) {
               cursor: "pointer",
               boxShadow: isCenter ? "0 4px 16px rgba(0,0,0,0.08)" : "none",
             }}
-            // 중앙(hover)만 선택/해제, 좌우는 아무 동작 없음
             onClick={(e) => {
               e.stopPropagation();
               if (isCenter) handleCenterClick(e);
@@ -123,13 +127,13 @@ export default function InterestSpinner({ value = [], onChange, onSpinNext }) {
               src={cat.icon}
               alt={cat.label}
               style={{
-                width: isCenter ? 40 : 56,
-                height: isCenter ? 40 : 56,
+                width: isCenter ? 45 : 61,
+                height: isCenter ? 45 : 61,
                 marginBottom: isCenter ? 6 : 0,
               }}
             />
             <span
-              className="font-semibold text-white text-center"
+              className="font-semibold font-fredoka text-white text-center"
               style={{
                 fontSize: isCenter ? 14 : 0,
                 fontWeight: isCenter ? 600 : 400,

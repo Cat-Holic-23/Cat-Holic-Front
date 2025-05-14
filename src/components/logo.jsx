@@ -16,10 +16,10 @@ export default function Moodi() {
 
   return (
     <img
-      src="/svgs/Moodi_happy.svg"
-      alt="Moodi"
+      src="/svgs/logo.svg"
+      alt="logo"
       className="object-contain"
-      style={{ height: "calc(var(--vh, 1vh) * 73)" }}
+      style={{ height: "calc(var(--vh, 1vh) * 13)" }}
     />
   );
 }

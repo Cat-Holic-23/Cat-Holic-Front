@@ -1,10 +1,10 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import MiniTitle from "@/components/minititle/minititle";
 import InputId from "@/components/inputs/input";
 import InputPassword from "@/components/inputs/input";
 import NextButton from "@/components/buttons/NextButton";
+import Image from "next/image";
 
 export default function CreateAccountId() {
   const router = useRouter();
@@ -14,7 +14,6 @@ export default function CreateAccountId() {
   const [agree1, setAgree1] = useState(false);
   const [agree2, setAgree2] = useState(false);
 
-  // 약관 체크박스 연동
   const handleAll = (checked) => {
     setAgreeAll(checked);
     setAgree1(checked);
@@ -22,13 +21,23 @@ export default function CreateAccountId() {
   };
 
   const handleNext = () => {
-    // localStorage에 임시 저장
     localStorage.setItem("signup_userId", userId);
     localStorage.setItem("signup_userPassword", userPassword);
     router.push("/userInfo");
   };
 
   const isActive = userId.trim() && userPassword.trim() && agree1 && agree2;
+
+  const renderCheckbox = (checked, onChange) => (
+    <button onClick={onChange} className="w-5 h-5">
+      <Image
+        src={checked ? "/svgs/check.svg" : "/svgs/check_no.svg"}
+        alt="checkbox"
+        width={20}
+        height={20}
+      />
+    </button>
+  );
 
   return (
     <div className="min-h-screen flex flex-col items-center px-3 pt-10 pb-[100px] w-full">
@@ -47,59 +56,64 @@ export default function CreateAccountId() {
             onChange={(e) => setUserPassword(e.target.value)}
           />
         </div>
-        {/* 약관동의 퍼블리싱 */}
-        <div className="w-full mt-6 space-y-3 text-sm text-gray-800">
-          <div className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              checked={agreeAll}
-              onChange={(e) => handleAll(e.target.checked)}
-            />
-            <span>약관 전체 동의</span>
+
+        <div className="w-full mt-6 space-y-4 text-sm text-gray-800">
+          <div
+            className="flex items-center justify-between"
+            style={{ color: agreeAll ? "#424242" : "#00000087" }}
+          >
+            <div className="flex items-center space-x-2">
+              {renderCheckbox(agreeAll, () => handleAll(!agreeAll))}
+              <span>Agree to all</span>
+            </div>
           </div>
-          <div className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              checked={agree1}
-              onChange={(e) => {
-                setAgree1(e.target.checked);
-                setAgreeAll(e.target.checked && agree2);
-              }}
-            />
-            <span>
-              [필수] Moodi 이용약관
-              <a
-                href="/terms.pdf"
-                target="_blank"
-                className="ml-2 underline text-blue-500"
-              >
-                PDF
-              </a>
-            </span>
+
+          <div
+            className="flex items-center justify-between"
+            style={{ color: agree1 ? "#424242" : "#00000087" }}
+          >
+            <div className="flex items-center space-x-2">
+              {renderCheckbox(agree1, () => {
+                const next = !agree1;
+                setAgree1(next);
+                setAgreeAll(next && agree2);
+              })}
+              <span>[Required] Moodi Terms of Use</span>
+            </div>
+            <a href="/Moodi_terms.pdf" target="_blank" rel="noopener noreferrer">
+              <Image
+                src="/svgs/PDF_down.svg"
+                alt="Download PDF"
+                width={20}
+                height={20}
+              />
+            </a>
           </div>
-          <div className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              checked={agree2}
-              onChange={(e) => {
-                setAgree2(e.target.checked);
-                setAgreeAll(e.target.checked && agree1);
-              }}
-            />
-            <span>
-              [필수] Moodi 개인정보처리방침
-              <a
-                href="/privacy.pdf"
-                target="_blank"
-                className="ml-2 underline text-blue-500"
-              >
-                PDF
-              </a>
-            </span>
+
+          <div
+            className="flex items-center justify-between"
+            style={{ color: agree2 ? "#424242" : "#00000087" }}
+          >
+            <div className="flex items-center space-x-2">
+              {renderCheckbox(agree2, () => {
+                const next = !agree2;
+                setAgree2(next);
+                setAgreeAll(next && agree1);
+              })}
+              <span>[Required] Moodi Terms of Service</span>
+            </div>
+            <a href="/Moodi_services.pdf" target="_blank" rel="noopener noreferrer">
+              <Image
+                src="/svgs/PDF_down.svg"
+                alt="Download PDF"
+                width={20}
+                height={20}
+              />
+            </a>
           </div>
         </div>
       </div>
-      {/* 다음 버튼 */}
+
       <div className="absolute bottom-[36px] w-full flex justify-center">
         <NextButton onClick={handleNext} disabled={!isActive} />
       </div>

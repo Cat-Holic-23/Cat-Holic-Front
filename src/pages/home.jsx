@@ -10,7 +10,6 @@ import { getNickname } from "@/components/apis/auth";
 export default function Home() {
   const [point, setPoint] = useState(0);
   const [nickname, setNickname] = useState("");
-  const [showPointModal, setShowPointModal] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -45,9 +44,9 @@ export default function Home() {
           />
         </button>
 
-        <div className="flex flex-col items-center justify-center flex-grow pt-[60px] pb-[120px]">
+        <div className="flex flex-col items-center justify-center flex-grow pt-[70px] pb-[120px]">
           <SpeechBubble>Hi {nickname}!</SpeechBubble>
-          <Moodi />
+          <Moodi className = "animate-float2" />
         </div>
 
         <div className="w-full flex justify-center">

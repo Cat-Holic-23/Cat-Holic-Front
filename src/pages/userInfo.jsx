@@ -27,9 +27,8 @@ export default function CreateAccountInfo() {
         <MiniTitle>User Information</MiniTitle>
       </div>
 
-
       <div className="flex flex-col items-center justify-center w-full max-w-md flex-1 pt-[80px] pb-[140px]">
-        <div className="mb-8">
+        <div className="mb-8 animate-float2">
           <Moodi />
         </div>
         <div className="w-full flex flex-col items-center space-y-4">

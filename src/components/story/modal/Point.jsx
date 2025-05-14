@@ -56,7 +56,7 @@ export default function Point_Modal({ open, onClose, point = 30 }) {
             className="
               flex justify-center items-center w-[127px] h-[58px]
               rounded-[15px] bg-gradient-to-r from-[#FFB932] to-[#FD723FCC] shadow-[0_4px_0_0_#F2712C]
-              font-pretendard font-semibold text-[18px] text-white
+              font-fredoka font-medium text-[18px] text-white
             "
             onClick={handleGoHome}
           >
@@ -67,7 +67,7 @@ export default function Point_Modal({ open, onClose, point = 30 }) {
             className="
               flex justify-center items-center w-[127px] h-[58px]
               rounded-[15px] bg-[#FFF7E7] shadow-[0_4px_0_0_#E37730]
-              font-pretendard font-semibold text-[18px] text-[#FFB932]
+              font-fredoka font-medium text-[18px] text-[#FFB932]
             "
             onClick={handleGoItem}
           >

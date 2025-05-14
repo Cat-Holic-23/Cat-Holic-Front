@@ -5,7 +5,7 @@ const InputBox = ({ value, onChange, placeholder, type = "text" }) => {
     <div
       className="
         flex items-center w-[342px] h-[58px] 
-        pr-[183px] pl-4 
+        pr-[183px] pl-4 font-semibold 
         rounded-[15px] border border-white bg-white 
         shadow-[0px_4px_0px_0px_rgba(255,179,0,0.20)]
       "
@@ -16,7 +16,7 @@ const InputBox = ({ value, onChange, placeholder, type = "text" }) => {
         onChange={onChange}
         placeholder={placeholder}
         className="
-          w-full border-none outline-none bg-transparent 
+          w-full border-none outline-none bg-transparent font-semibold
           text-[14px] text-[#222] placeholder:text-[#aaa] font-pretendard
         "
       />
