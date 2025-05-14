@@ -4,12 +4,14 @@ const REFRESH_TOKEN_KEY = "refreshToken";
 
 //토큰 저장
 export const setAccessToken = (token) => {
-  localStorage.setItem(ACCESS_TOKEN_KEY, token);
+  const cleanToken = token.startsWith("Bearer ") ? token.slice(7) : token;
+  localStorage.setItem("accessToken", cleanToken);
 };
 
-//로그인 된 사용자 토큰 - 헤덩에 값 넣음
 export const getAccessToken = () => {
-  return localStorage.getItem(ACCESS_TOKEN_KEY);
+  const token = localStorage.getItem("accessToken");
+  console.log("getAccessToken:", token);
+  return token ? `Bearer ${token}` : null;
 };
 
 //로그아웃시 토큰 삭제
