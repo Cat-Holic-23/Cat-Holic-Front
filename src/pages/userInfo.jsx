@@ -1,11 +1,4 @@
-{
-  /* 해야할 일 */
-}
-// 1. nickname, age, gender 값 보내기
-// 2. gender 선택박스 CSS 추가
-// 3. NextButton 활성화 조건
-
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import MiniTitle from "@/components/minititle/minititle";
 import Moodi from "@/components/moodi_face";
@@ -14,13 +7,20 @@ import Age from "@/components/inputs/age";
 import Gender from "@/components/inputs/boy_girl";
 import NextButton from "@/components/buttons/NextButton";
 
-export default function CreateAccount() {
+export default function CreateAccountInfo() {
   const router = useRouter();
+  const [nickname, setNickname] = useState("");
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
 
   const handleNext = () => {
-    router.push("/interest");
+    localStorage.setItem("signup_nickname", nickname);
+    localStorage.setItem("signup_age", age);
+    localStorage.setItem("signup_gender", gender);
+    router.push("/int");
   };
 
+  const isActive = nickname.trim() && age && gender;
   return (
     <div className="relative min-h-screen w-full flex flex-col items-center bg-transparent">
       {/* 상단 MiniTitle 고정 */}
@@ -34,15 +34,18 @@ export default function CreateAccount() {
           <Moodi />
         </div>
         <div className="w-full flex flex-col items-center space-y-4">
-          <NickName />
-          <Age />
-            <Gender />
+          <NickName
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+          />
+          <Age value={age} onChange={(e) => setAge(e.target.value)} />
+          <Gender value={gender} onChange={setGender} />
         </div>
       </div>
 
       {/* 하단 NextButton 고정 */}
       <div className="fixed bottom-0 left-0 w-full flex justify-center z-10 pb-9 ">
-        <NextButton />
+        <NextButton onClick={handleNext} disabled={!isActive} />
       </div>
     </div>
   );
