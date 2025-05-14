@@ -28,8 +28,8 @@ export default function Navbar() {
         {MENU.map((menu) => {
           const isActive = router.pathname === menu.path;
           const isHover = hovered === menu.key;
-          const color = isActive || isHover ? "#4CA0FF" : "#8AB6E9";
-          const opacity = isActive || isHover ? 1 : 0.5;
+          const color = isHover ? "#4CA0FF" : isActive ? "#4CA0FF" : "#8AB6E9";
+const opacity = isHover ? 1 : isActive ? 1 : 0.5;
 
           return (
             <button

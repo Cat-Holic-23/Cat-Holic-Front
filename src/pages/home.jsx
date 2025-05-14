@@ -1,14 +1,28 @@
- {/* 해야할 일 */}
-// 1. 포인트 값 받아오는 api (point.js)
-// 2. nickname 받아오는 api(auth.js)
-
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import Point from "@/components/point";
 import SpeechBubble from "@/components/speech_basci";
 import Moodi from "@/components/moodi";
 import Navbar from "@/components/nav/navbar";
+import { getUserPoint } from "@/components/apis/point";
+import { getNickname } from "@/components/apis/auth";
 
 export default function Home() {
+  const [point, setPoint] = useState(0);
+  const [nickname, setNickname] = useState("");
+  const [showPointModal, setShowPointModal] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    async function fetchData() {
+      const userPoint = await getUserPoint();
+      const userNickname = await getNickname();
+      setPoint(userPoint);
+      setNickname(userNickname);
+    }
+    fetchData();
+  }, []);
+
   const handleSettingClick = () => {
     alert("Coming Soon");
   };
@@ -18,7 +32,7 @@ export default function Home() {
       {/* 모바일 뷰 가상 화면 */}
       <div className="relative w-full max-w-[390px] min-h-screen flex flex-col items-center justify-between px-4">
         <div className="absolute top-4 left-4 z-10">
-          <Point value={120} />
+          <Point value={point} />
         </div>
 
         <button
@@ -32,12 +46,10 @@ export default function Home() {
           />
         </button>
 
-
         <div className="flex flex-col items-center justify-center flex-grow pt-[60px] pb-[120px]">
-          <SpeechBubble>Hi Nickname!</SpeechBubble>
+          <SpeechBubble>Hi {nickname}!</SpeechBubble>
           <Moodi />
         </div>
-
 
         <div className="w-full flex justify-center">
           <Navbar />
