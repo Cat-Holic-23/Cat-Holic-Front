@@ -1,17 +1,17 @@
+// 이게 로그인 버튼
+
 import React from "react";
 import { useRouter } from "next/router";
+import { hasValidToken } from "@/utils/storage";
 
 const FlyInButton = ({ disabled = false }) => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push("/home");
-    if (isLoggedIn() && !hasValidToken()) {
-      // 토큰은 있는데 만료된 경우 (로그인 필요)
-      router.push("/login");
+    if (hasValidToken()) {
+      router.push("/home");
     } else {
-      // 토큰 자체가 없는 경우 (회원가입 필요)
-      router.push("/createaccount");
+      router.push("/login");
     }
   };
 

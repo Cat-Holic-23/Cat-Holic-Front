@@ -1,16 +1,26 @@
 import React from "react";
 import { useRouter } from "next/router";
+import { login, getUserInfo } from "@/components/apis/auth";
+import { setAccessToken, isLoggedIn } from "@/utils/storage";
 
-const LoginButton = ({ disabled = false }) => {
+const LoginButton = ({ userId, userPassword, disabled = false }) => {
   const router = useRouter();
 
-  const handleClick = () => {
-    router.push("/home");
-    if (isLoggedIn() && !hasValidToken()) {
-      // 토큰은 있는데 만료된 경우 (로그인 필요)
-      router.push("/login");
-    } else {
-      // 토큰 자체가 없는 경우 (회원가입 필요)
+  const handleLogin = async () => {
+    try {
+      // 1. 로그인 시도
+      await login({ username: userId, password: userPassword });
+
+      // 2. 로그인 성공 후 회원정보 조회 시도
+      try {
+        await getUserInfo();
+        router.push("/home");
+      } catch (err) {
+        alert("로그인 실패");
+        router.push("/createaccount");
+      }
+    } catch (err) {
+      alert("로그인 실패");
       router.push("/createaccount");
     }
   };
@@ -18,7 +28,7 @@ const LoginButton = ({ disabled = false }) => {
   return (
     <button
       className={`
-        w-[314px] h-[55px] rounded-full border-none text-white text-[20px] font-bold 
+        w-[314px] h-[55px] rounded-full border-none text-white text-[20px] font-bold
         transition-all duration-200 font-pretendard
         ${
           disabled
@@ -26,7 +36,7 @@ const LoginButton = ({ disabled = false }) => {
             : "bg-[#FFB932] shadow-[0px_4px_0px_0px_#F67E06] cursor-pointer hover:bg-gradient-to-r hover:from-[#FFB932] hover:to-[rgba(253,81,29,0.8)] hover:shadow-[0px_4px_0px_0px_#FF762D] active:scale-95"
         }
       `}
-      onClick={handleClick}
+      onClick={handleLogin}
       disabled={disabled}
     >
       Login
