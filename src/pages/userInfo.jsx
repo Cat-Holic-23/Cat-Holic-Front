@@ -23,12 +23,11 @@ export default function CreateAccountInfo() {
   const isActive = nickname.trim() && age && gender;
   return (
     <div className="relative min-h-screen w-full flex flex-col items-center bg-transparent">
-      {/* 상단 MiniTitle 고정 */}
       <div className="fixed top-0 left-0 w-full flex justify-center z-10 pt-10 pb-4 bg-transparent">
         <MiniTitle>User Information</MiniTitle>
       </div>
 
-      {/* 가운데 Moodi + 입력폼 */}
+
       <div className="flex flex-col items-center justify-center w-full max-w-md flex-1 pt-[80px] pb-[140px]">
         <div className="mb-8">
           <Moodi />

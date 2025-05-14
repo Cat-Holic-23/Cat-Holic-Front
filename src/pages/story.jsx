@@ -80,7 +80,7 @@ export default function Story() {
         answer: storyData.correct_answer,
         userInput: userAnswer,
       });
-      setResultId(resultData.id); // 반드시 저장!
+      setResultId(resultData.id);
     } catch (e) {
       alert("답변 저장에 실패했습니다.");
       return;
@@ -123,15 +123,14 @@ export default function Story() {
 
   return (
     <div className="relative min-h-screen w-full flex flex-col items-center bg-white overflow-hidden">
-      {/* 상단 MiniTitle 고정 */}
       <div className="fixed top-0 left-0 w-full flex justify-center z-10 pt-10 pb-4 bg-white">
         <MiniTitle>story</MiniTitle>
       </div>
 
-      {/* 중앙 컨텐츠 */}
+
       <div className="flex flex-col items-center w-full max-w-md flex-1 pt-[80px] pb-[40px]">
         <div className="w-full flex flex-col items-center space-y-4">
-          {/* step 1: 토픽 입력 */}
+
           {step === 1 && (
             <>
               <SpeechBubble>What topic do you want to talk</SpeechBubble>
@@ -158,7 +157,6 @@ export default function Story() {
             <>
               <SpeechBubble>{socialQuery}</SpeechBubble>
               <MoodiFace style={{ width: 120, height: 120 }} />
-              {/* 4지선다와 채팅박스를 같은 flow에 배치 */}
               <div className="w-full flex flex-col items-center gap-3 mt-4">
                 <Select
                   options={storyData?.choices || []}
@@ -174,7 +172,6 @@ export default function Story() {
         </div>
       </div>
 
-      {/* step 1일 때만 ChatInput을 하단에 fixed로 고정 */}
       {step === 1 && (
         <div
           className="fixed left-1/2 bottom-16 z-20 w-full max-w-md px-4 flex flex-col items-center"
@@ -187,7 +184,7 @@ export default function Story() {
         </div>
       )}
 
-      {/* 모달들 */}
+
       <Right_Modal
         open={showRightModal}
         onClose={() => setShowRightModal(false)}

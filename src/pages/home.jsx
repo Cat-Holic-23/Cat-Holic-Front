@@ -29,7 +29,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen w-full flex justify-center overflow-hidden">
-      {/* 모바일 뷰 가상 화면 */}
       <div className="relative w-full max-w-[390px] min-h-screen flex flex-col items-center justify-between px-4">
         <div className="absolute top-4 left-4 z-10">
           <Point value={point} />
