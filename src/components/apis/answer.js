@@ -1,30 +1,24 @@
-import { useState } from "react";
-import Answer from "@/components/story/Answer";
-import axios from "@/libs/axios";
+import instance from "@/libs/axios";
 
-export default function AnswerPage() {
-  const [response, setResponse] = useState("What topic do you want to talk about?");
 
-  const handleSubmit = async (userInput) => {
-    try {
-      const res = await axios.post("/api/answer", {
-        question: userInput,
-      });
-      const answer = res.data?.answer || "응답을 불러올 수 없어요.";
-      setResponse(answer);
-    } catch (err) {
-      console.error("API 호출 실패", err);
-      setResponse("문제가 발생했어요.");
-    }
-  };
+export const saveResult = async (resultData) => {
+  const response = await instance.post("/results", resultData);
+  return response.data;
+};
 
-  return (
-    <div className="flex flex-col items-center justify-between h-full p-4">
-      <div className="bg-gray-200 text-center text-sm px-4 py-2 rounded-xl relative mb-4">
-        {response}
-        <div className="absolute left-1/2 transform -translate-x-1/2 top-full w-0 h-0 border-x-8 border-x-transparent border-t-[10px] border-t-gray-200"></div>
-      </div>
-      <Answer onSubmit={handleSubmit} />
-    </div>
-  );
-}
+
+export const getResults = async () => {
+  const response = await instance.get("/results");
+  return response.data;
+};
+
+
+export const updateResult = async (id, updateData) => {
+  const response = await instance.put(`/results/${id}`, updateData);
+  return response.data;
+};
+
+export const deleteResult = async (id) => {
+  const response = await instance.delete(`/results/${id}`);
+  return response.data;
+};

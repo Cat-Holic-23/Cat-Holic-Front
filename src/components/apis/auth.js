@@ -1,40 +1,63 @@
-//로그인 api 관리
-import axios from "@/libs/axios";
+import instance from "@/libs/axios";
 import { setAccessToken } from "@/utils/storage";
 
-const ERROR_MESSAGES = {
-  "USR-001": "이미 존재하는 사용자입니다.",
-  "COM-000": "성공",
-  UNKNOWN_ERROR: "알 수 없는 에러가 발생했습니다.",
-};
-
-export async function join({ userName, password, nickname, age, gender }) {
+// 회원가입
+export const join = async (data) => {
   try {
-    const res = await axios.post("/join", {
-      userName,
-      password,
-      nickname,
-      age,
-      gender,
-    });
-
-    const data = res.data;
-
-    if (data.code !== "COM-000") {
-      throw new Error(ERROR_MESSAGES[data.code] || data.code);
-    }
-
-    const authHeader = res.headers["authorization"];
-    if (authHeader) {
-      const token = authHeader.startsWith("Bearer ")
-        ? authHeader.slice(7)
-        : authHeader;
+    const response = await instance.post("/join", data);
+    const token =
+      response.headers["authorization"] || response.headers["Authorization"];
+    if (token) {
       setAccessToken(token);
     }
-
-    return data.data;
-  } catch (err) {
-    const errorCode = err?.response?.data?.code || "UNKNOWN_ERROR";
-    throw new Error(ERROR_MESSAGES[errorCode] || errorCode);
+    return response;
+  } catch (error) {
+    throw error;
   }
-}
+};
+
+// 로그인
+export const login = async (data) => {
+  try {
+    const formData = new FormData();
+    formData.append("username", data.username);
+    formData.append("password", data.password);
+
+    const response = await instance.post("/login", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    const token =
+      response.headers["authorization"] || response.headers["Authorization"];
+    if (token) {
+      setAccessToken(token);
+    }
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 회원정보 조회
+export const getUserInfo = async () => {
+  try {
+    const response = await instance.get("/users");
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+//닉네임
+export const getNickname = async () => {
+  try {
+    const response = await instance.get("/users");
+    console.log("getNickname response.data:", response.data);
+    return response.data.nickname || "";
+  } catch (error) {
+    console.error("getNickname error:", error);
+    throw error;
+  }
+};
