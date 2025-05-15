@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { login, getUserInfo } from "@/components/apis/auth";
+import { login, getUserInfo } from "@/pages/api/auth";
 import { setAccessToken, isLoggedIn } from "@/utils/storage";
 
 const LoginButton = ({ userId, userPassword, disabled = false }) => {

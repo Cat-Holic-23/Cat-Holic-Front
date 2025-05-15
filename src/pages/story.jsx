@@ -8,9 +8,9 @@ import Select from "@/components/story/Select";
 import Right_Modal from "@/components/story/modal/Right";
 import Wrong_Modal from "@/components/story/modal/Wrong";
 import Point_Modal from "@/components/story/modal/Point";
-import { saveResult, updateResult } from "@/components/apis/answer";
-import { generateStory } from "@/components/apis/story";
-import { checkStory } from "@/components/apis/story";
+import { saveResult, updateResult } from "@/pages/api/answer";
+import { generateStory } from "@/pages/api/story";
+import { checkStory } from "@/pages/api/story";
 import StoryLoading from "@/components/story/Loading";
 
 export default function Story() {

@@ -4,8 +4,8 @@ import Point from "@/components/point";
 import SpeechBubble from "@/components/speech_basci";
 import Moodi from "@/components/moodi";
 import Navbar from "@/components/nav/navbar";
-import { getUserPoint } from "@/components/apis/point";
-import { getNickname } from "@/components/apis/auth";
+import { getUserPoint } from "@/pages/api/point";
+import { getNickname } from "@/pages/api/auth";
 
 export default function Home() {
   const [point, setPoint] = useState(0);

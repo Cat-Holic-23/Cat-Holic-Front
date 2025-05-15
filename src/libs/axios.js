@@ -2,6 +2,7 @@ import axios from "axios";
 import { getAccessToken } from "@/utils/storage";
 
 //axios 커스텀
+
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   headers: {
@@ -10,9 +11,9 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-// join login빼고 다 헤더에 토큰 
+// join login빼고 다 헤더에 토큰
 instance.interceptors.request.use((config) => {
-  if (config.url === "/join" || config.url === "/login") {
+  if (config.url === "/api/join" || config.url === "/api/login") {
     delete config.headers.Authorization;
     return config;
   }

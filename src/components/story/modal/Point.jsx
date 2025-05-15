@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { addPoint } from "@/components/apis/point";
+import { addPoint } from "@/pages/api/point";
 
 export default function Point_Modal({ open, onClose, point = 30 }) {
   const router = useRouter();
