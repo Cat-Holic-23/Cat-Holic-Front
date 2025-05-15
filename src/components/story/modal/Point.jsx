@@ -1,6 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { addPoint } from "@/pages/api/point";
+import Image from "next/image";
 
 export default function Point_Modal({ open, onClose, point = 30 }) {
   const router = useRouter();
@@ -9,7 +10,7 @@ export default function Point_Modal({ open, onClose, point = 30 }) {
 
   const handleGoHome = async () => {
     try {
-      await addPoint(point); 
+      await addPoint(point);
     } catch (e) {
       console.error("포인트 적립 실패", e);
     }
@@ -22,10 +23,10 @@ export default function Point_Modal({ open, onClose, point = 30 }) {
     } catch (e) {
       console.error("포인트 적립 실패", e);
     }
-    router.push("/home"); 
+    router.push("/home");
   };
 
-    return (
+  return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/20"
       onClick={onClose}
@@ -35,7 +36,7 @@ export default function Point_Modal({ open, onClose, point = 30 }) {
         onClick={(e) => e.stopPropagation()}
       >
         <img
-          src="/svgs/medal.svg"
+          src="/svgs/포인트화면메달.svg"
           alt="medal"
           className="w-[190px] h-[190px] mb-4"
         />

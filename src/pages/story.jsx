@@ -74,7 +74,7 @@ export default function Story() {
       return;
     }
 
-    // 1. 결과 저장 
+    // 1. 결과 저장
     let resultData;
     try {
       resultData = await saveResult({
