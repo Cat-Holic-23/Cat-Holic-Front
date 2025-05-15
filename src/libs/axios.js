@@ -13,7 +13,7 @@ const instance = axios.create({
 
 // join login빼고 다 헤더에 토큰
 instance.interceptors.request.use((config) => {
-  if (config.url === "/api/join" || config.url === "/api/login") {
+  if (config.url === "/join" || config.url === "/login") {
     delete config.headers.Authorization;
     return config;
   }
