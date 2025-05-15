@@ -16,11 +16,11 @@ const LoginButton = ({ userId, userPassword, disabled = false }) => {
         await getUserInfo();
         router.push("/home");
       } catch (err) {
-        alert("로그인 실패");
+        alert("Login failed");
         router.push("/createaccount");
       }
     } catch (err) {
-      alert("로그인 실패");
+      alert("Login failed");
       router.push("/createaccount");
     }
   };

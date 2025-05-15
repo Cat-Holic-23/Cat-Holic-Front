@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import MiniTitle from "@/components/minititle/minititle";
 import InputId from "@/components/inputs/input";
-import InputPassword from "@/components/inputs/input";
+import InputPassword from "@/components/inputs/password";
 import NextButton from "@/components/buttons/NextButton";
 import Image from "next/image";
 
@@ -13,6 +13,7 @@ export default function CreateAccountId() {
   const [agreeAll, setAgreeAll] = useState(false);
   const [agree1, setAgree1] = useState(false);
   const [agree2, setAgree2] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleAll = (checked) => {
     setAgreeAll(checked);
@@ -56,7 +57,6 @@ export default function CreateAccountId() {
             onChange={(e) => setUserPassword(e.target.value)}
           />
         </div>
-
         <div className="w-full mt-6 space-y-4 text-sm text-gray-800">
           <div
             className="flex items-center justify-between"
@@ -80,7 +80,11 @@ export default function CreateAccountId() {
               })}
               <span>[Required] Moodi Terms of Use</span>
             </div>
-            <a href="/Moodi_terms.pdf" target="_blank" rel="noopener noreferrer">
+            <a
+              href="/Moodi_terms.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Image
                 src="/svgs/PDF_down.svg"
                 alt="Download PDF"
@@ -102,7 +106,11 @@ export default function CreateAccountId() {
               })}
               <span>[Required] Moodi Terms of Service</span>
             </div>
-            <a href="/Moodi_services.pdf" target="_blank" rel="noopener noreferrer">
+            <a
+              href="/Moodi_services.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Image
                 src="/svgs/PDF_down.svg"
                 alt="Download PDF"

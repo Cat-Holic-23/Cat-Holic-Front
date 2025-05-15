@@ -13,7 +13,6 @@ import { generateStory } from "@/components/apis/story";
 import { checkStory } from "@/components/apis/story";
 import StoryLoading from "@/components/story/Loading";
 
-
 export default function Story() {
   const [step, setStep] = useState(1);
   const [topic, setTopic] = useState("");
@@ -31,8 +30,6 @@ export default function Story() {
   const [resultId, setResultId] = useState(null);
   const [isStoryLoading, setIsStoryLoading] = useState(false);
 
-
-
   // 1. 사용자가 채팅 입력 후 send
   const handleSendTopic = async (msg) => {
     setTopic(msg);
@@ -47,12 +44,12 @@ export default function Story() {
       setCorrectAnswer(data.correct_answer);
       setStep(2);
     } catch (e) {
-      alert("이야기 생성에 실패했습니다.");
+      alert("Failed to generate story.");
     } finally {
       setIsStoryLoading(false);
     }
   };
-  // 2. 사회상황 이야기 끝나면(화면 클릭)
+  // 2. 사회상황 이야기 끝나면
   const handleStoryClick = () => {
     if (step === 2) setStep(3);
   };
@@ -71,13 +68,13 @@ export default function Story() {
     setShowPointModal(true);
   };
 
- const handleAnswer = async (userAnswer) => {
+  const handleAnswer = async (userAnswer) => {
     if (!storyData) {
-      alert("문제가 생성되지 않았습니다.");
+      alert("No problems were created.");
       return;
     }
 
-    // 1. 결과 저장 (POST /results)
+    // 1. 결과 저장 
     let resultData;
     try {
       resultData = await saveResult({
@@ -89,11 +86,11 @@ export default function Story() {
       });
       setResultId(resultData.id);
     } catch (e) {
-      alert("답변 저장에 실패했습니다.");
+      alert("Failed to save answer.");
       return;
     }
 
-    // 2. 해설/정답 확인 (POST /gemini/{id})
+    // 2. 해설/정답 확인인
     try {
       const aiResult = await checkStory(resultData.id);
       setExplanation(aiResult.explanation);
@@ -107,7 +104,7 @@ export default function Story() {
         setShowWrongModal(true);
       }
     } catch (e) {
-      setExplanation("해설을 불러오지 못했습니다.");
+      setExplanation("Could not load commentary.");
       setShowWrongModal(true);
     }
   };
@@ -124,7 +121,7 @@ export default function Story() {
         userInput: newUserInput,
       });
     } catch (e) {
-      alert("답변 수정에 실패했습니다.");
+      alert("Failed to edit your answer.");
     }
   };
 
@@ -139,7 +136,10 @@ export default function Story() {
           {step === 1 && (
             <>
               <SpeechBubble>What topic do you want to talk about</SpeechBubble>
-              <Moodi style={{ width: 120, height: 120 }} className="animate-float2"/>
+              <Moodi
+                style={{ width: 120, height: 120 }}
+                className="animate-float2"
+              />
             </>
           )}
           {step === 2 && (
@@ -149,19 +149,28 @@ export default function Story() {
               style={{ minHeight: 400 }}
             >
               <SpeechBubble>{socialStory}</SpeechBubble>
-              <Moodi style={{ width: 120, height: 120 }} className="animate-float2"/>
+              <Moodi
+                style={{ width: 120, height: 120 }}
+                className="animate-float2"
+              />
             </div>
           )}
           {step === 3 && (
             <>
               <SpeechBubble>{socialQuery}</SpeechBubble>
-              <Moodi style={{ width: 120, height: 120 }} className="animate-float2" />
+              <Moodi
+                style={{ width: 120, height: 120 }}
+                className="animate-float2"
+              />
             </>
           )}
           {step === 4 && (
             <>
               <SpeechBubble>{socialQuery}</SpeechBubble>
-              <MoodiFace tyle={{ width: 120, height: 120 }} className="animate-float2"/>
+              <MoodiFace
+                tyle={{ width: 120, height: 120 }}
+                className="animate-float2"
+              />
               <div className="w-full flex flex-col items-center gap-3 mt-4 ">
                 <Select
                   options={storyData?.choices || []}

@@ -1,17 +1,15 @@
-
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import MiniTitle from "@/components/minititle/minititle";
 import InputId from "@/components/inputs/input";
-import InputPassword from "@/components/inputs/input";
 import LoginButton from "@/components/buttons/LoginButton";
 import { useRouter } from "next/router";
+import InputPassword from "@/components/inputs/password";
 
 export default function Login() {
   const [userId, setUserId] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-
   const isActive = userId.trim() && userPassword.trim() && !loading;
 
   return (
@@ -21,14 +19,14 @@ export default function Login() {
 
         <div className="w-full mt-20 space-y-4 flex flex-col items-center">
           <InputId
+            placeholder="Enter your user ID"
             value={userId}
             onChange={(e) => setUserId(e.target.value)}
-            placeholder="Enter your user ID"
           />
           <InputPassword
+            placeholder="Enter your password"
             value={userPassword}
             onChange={(e) => setUserPassword(e.target.value)}
-            placeholder="Enter your password"
           />
         </div>
 

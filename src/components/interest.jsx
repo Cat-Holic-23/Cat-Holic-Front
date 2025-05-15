@@ -151,7 +151,7 @@ export default function InterestSpinner({ value = [], onChange, onSpinNext }) {
             {isSelected && (
               <img
                 src="/svgs/check.svg"
-                alt="선택됨"
+                alt="Checked"
                 style={{
                   position: "absolute",
                   right: 3,

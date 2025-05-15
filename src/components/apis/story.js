@@ -11,7 +11,7 @@ export const saveResult = async (result) => {
   const response = await instance.post("/results", result);
   return response.data;
 };
-// 답변 체크 
+// 답변 체크
 export const checkStory = async (id, userSelected) => {
   const response = await instance.post(`/gemini/${id}`, {
     user_selected: userSelected,

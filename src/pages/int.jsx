@@ -46,7 +46,7 @@ export default function Int() {
         router.push("/login");
       }, 2000);
     } catch (err) {
-      alert("회원가입에 실패했습니다.");
+      alert("Membership registration failed.");
     } finally {
       setLoading(false);
     }
