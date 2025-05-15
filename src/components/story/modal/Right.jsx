@@ -18,7 +18,7 @@ export default function Right_Modal({ open, onClose, onContinue, explanation }) 
   const fontSizeClass = getFontSize(explanation);
 
 
- return (
+return (
     <div
       className="fixed inset-0 z-50 flex items-end justify-center bg-black/20"
       onClick={onClose}
@@ -38,7 +38,7 @@ export default function Right_Modal({ open, onClose, onContinue, explanation }) 
             className={`text-[#424242] font-pretendard font-medium text-center mb-4 ${fontSizeClass} break-words`}
             style={{ wordBreak: "break-word" }}
           >
-            {explanation || "NN waits until the friend is done"}
+            CORRECT
           </div>
           <ContinueButton
             className="w-full max-w-[288px] mt-2"

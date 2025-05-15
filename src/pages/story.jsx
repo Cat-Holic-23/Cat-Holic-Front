@@ -204,7 +204,6 @@ export default function Story() {
         open={showRightModal}
         onClose={() => setShowRightModal(false)}
         onContinue={handleContinue}
-        explanation={explanation}
       />
       <Wrong_Modal
         open={showWrongModal}
