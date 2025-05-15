@@ -1,24 +1,10 @@
 import React from "react";
 import ContinueButton from "@/components/buttons/ContinueButton";
 
-
-export default function Right_Modal({ open, onClose, onContinue, explanation }) {
+export default function Right_Modal({ open, onClose, onContinue }) {
   if (!open) return null;
 
-  const getFontSize = (text) => {
-    const length = text ? text.length : 0;
-    if (length < 50) return "text-[16px]";
-    if (length < 100) return "text-[14px]";
-    if (length < 150) return "text-[12px]";
-    return "text-[10px]";
-  };
-
-
-
-  const fontSizeClass = getFontSize(explanation);
-
-
-return (
+  return (
     <div
       className="fixed inset-0 z-50 flex items-end justify-center bg-black/20"
       onClick={onClose}
@@ -35,7 +21,7 @@ return (
             </span>
           </div>
           <div
-            className={`text-[#424242] font-pretendard font-medium text-center mb-4 ${fontSizeClass} break-words`}
+            className="text-[#424242] font-pretendard font-medium text-center mb-4 text-[16px] break-words"
             style={{ wordBreak: "break-word" }}
           >
             CORRECT
