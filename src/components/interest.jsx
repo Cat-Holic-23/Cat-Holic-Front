@@ -39,7 +39,6 @@ export default function InterestSpinner({ value = [], onChange, onSpinNext }) {
   const [centerIdx, setCenterIdx] = useState(0);
   const selected = value;
 
-  // 한 칸씩 오른쪽으로만 회전
   const spinNext = () => setCenterIdx((prev) => (prev + 1) % categories.length);
 
   useEffect(() => {
@@ -48,22 +47,19 @@ export default function InterestSpinner({ value = [], onChange, onSpinNext }) {
     }
   }, [onSpinNext, spinNext]);
 
-  // 중앙 항목 클릭 시 선택/해제
   const handleCenterClick = (e) => {
     e.stopPropagation();
     const key = categories[centerIdx].key;
-    let next;
-    if (selected.includes(key)) {
-      next = selected.filter((k) => k !== key);
-    } else {
-      next = [...selected, key];
-    }
+    const next = selected.includes(key)
+      ? selected.filter((k) => k !== key)
+      : [...selected, key];
     onChange(next);
   };
 
-  // 스피너 아무 곳이나 터치/클릭 시 오른쪽으로만 회전
-  const handleAnyTouch = (e) => {
-    if (e.target.closest("button")) return;
+  const handleAnyClick = (e) => {
+    const isCenterItem = e.target.closest(".interest-item-center");
+    if (isCenterItem) return;
+
     spinNext();
   };
 
@@ -88,8 +84,7 @@ export default function InterestSpinner({ value = [], onChange, onSpinNext }) {
     <div
       className="relative mx-auto flex justify-center items-center"
       style={{ width: 320, height: 140, marginTop: 16 }}
-      onClick={handleAnyTouch}
-      onTouchEnd={handleAnyTouch}
+      onClick={handleAnyClick}
     >
       {visible.map((cat, idx) => {
         const isCenter = idx === 1;
@@ -99,7 +94,9 @@ export default function InterestSpinner({ value = [], onChange, onSpinNext }) {
         return (
           <div
             key={cat.key}
-            className="absolute flex flex-col items-center justify-center rounded-full shadow-md"
+            className={`interest-item absolute flex flex-col items-center justify-center rounded-full shadow-md ${
+              isCenter ? "interest-item-center" : ""
+            }`}
             style={{
               left: position.left,
               top: position.top,
@@ -115,10 +112,6 @@ export default function InterestSpinner({ value = [], onChange, onSpinNext }) {
               boxShadow: isCenter ? "0 4px 16px rgba(0,0,0,0.08)" : "none",
             }}
             onClick={(e) => {
-              e.stopPropagation();
-              if (isCenter) handleCenterClick(e);
-            }}
-            onTouchEnd={(e) => {
               e.stopPropagation();
               if (isCenter) handleCenterClick(e);
             }}
