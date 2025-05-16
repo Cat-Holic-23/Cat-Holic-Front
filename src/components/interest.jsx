@@ -1,36 +1,11 @@
 import React, { useState, useEffect } from "react";
 
 const categories = [
-  {
-    key: "painting",
-    label: "DRAWING",
-    icon: "/svgs/painting.svg",
-    color: "#A0D468",
-  },
-  {
-    key: "music",
-    label: "MUSIC",
-    icon: "/svgs/music.svg",
-    color: "#FF6D7C",
-  },
-  {
-    key: "sleep",
-    label: "SLEEPING",
-    icon: "/svgs/sleep.svg",
-    color: "#5D9BEC",
-  },
-  {
-    key: "piano",
-    label: "PIANO",
-    icon: "/svgs/piano.svg",
-    color: "#FFCE54",
-  },
-  {
-    key: "gaming",
-    label: "PLAY GAMES",
-    icon: "/svgs/gaming.svg",
-    color: "#AC92ED",
-  },
+  { key: "painting", label: "DRAWING", icon: "/svgs/painting.svg", color: "#A0D468" },
+  { key: "music", label: "MUSIC", icon: "/svgs/music.svg", color: "#FF6D7C" },
+  { key: "sleep", label: "SLEEPING", icon: "/svgs/sleep.svg", color: "#5D9BEC" },
+  { key: "piano", label: "PIANO", icon: "/svgs/piano.svg", color: "#FFCE54" },
+  { key: "gaming", label: "PLAY GAMES", icon: "/svgs/gaming.svg", color: "#AC92ED" },
 ];
 
 export { categories };
@@ -49,6 +24,7 @@ export default function InterestSpinner({ value = [], onChange, onSpinNext }) {
 
   const handleCenterClick = (e) => {
     e.stopPropagation();
+    e.preventDefault(); // 클릭 시 스크롤, 터치 이동 방지
     const key = categories[centerIdx].key;
     const next = selected.includes(key)
       ? selected.filter((k) => k !== key)
@@ -113,22 +89,11 @@ export default function InterestSpinner({ value = [], onChange, onSpinNext }) {
               position: "absolute",
             }}
           >
-
             <button
               type="button"
               className="w-[150px] h-[150px] rounded-full bg-transparent flex flex-col items-center justify-center cursor-pointer"
-              onClick={(e) => {
-                if (isCenter) {
-                  e.stopPropagation();
-                  handleCenterClick(e);
-                }
-              }}
-              onTouchStart={(e) => {
-                if (isCenter) {
-                  e.stopPropagation();
-                  handleCenterClick(e);
-                }
-              }}
+              onClick={handleCenterClick}
+              onTouchStart={handleCenterClick}
             >
               <img
                 src={cat.icon}
@@ -136,7 +101,6 @@ export default function InterestSpinner({ value = [], onChange, onSpinNext }) {
                 className={`${
                   isCenter ? "w-[45px] h-[45px] mb-1.5" : "w-[61px] h-[61px] mb-0"
                 }`}
-                draggable={false}
               />
               <span
                 className={`font-semibold font-fredoka text-white text-center transition-opacity overflow-hidden text-[14px] leading-[120%] tracking-[-0.3px] ${
