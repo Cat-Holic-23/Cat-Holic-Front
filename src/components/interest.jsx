@@ -108,39 +108,50 @@ export default function InterestSpinner({ value = [], onChange, onSpinNext }) {
               zIndex: position.zIndex,
               border: isSelected ? "3px solid #FFD600" : "none",
               transition: "all 0.2s cubic-bezier(.4,0,.2,1)",
-              cursor: "pointer",
               boxShadow: isCenter ? "0 4px 16px rgba(0,0,0,0.08)" : "none",
               pointerEvents: "auto",
             }}
-            onClick={(e) => {
-              if (isCenter) handleCenterClick(e);
-            }}
-            onTouchEnd={(e) => {
-              if (isCenter) handleCenterClick(e);
-            }}
           >
-            <img
-              src={cat.icon}
-              alt={cat.label}
-              className={`${
-                isCenter ? "w-[45px] h-[45px] mb-1.5" : "w-[61px] h-[61px] mb-0"
+            <div
+              className={`flex flex-col items-center justify-center rounded-full ${
+                isCenter ? "p-6 -m-6 cursor-pointer" : "cursor-default"
               }`}
-            />
-            <span
-              className={`font-semibold font-fredoka text-white text-center transition-opacity overflow-hidden text-[14px] leading-[120%] tracking-[-0.3px] ${
-                isCenter ? "opacity-100 h-[18px]" : "opacity-0 h-0"
-              }`}
-              style={{ fontWeight: isCenter ? 600 : 400 }}
+              onClick={(e) => {
+                if (isCenter) {
+                  e.stopPropagation();
+                  handleCenterClick(e);
+                }
+              }}
+              onTouchEnd={(e) => {
+                if (isCenter) {
+                  e.stopPropagation();
+                  handleCenterClick(e);
+                }
+              }}
             >
-              {isCenter && cat.label}
-            </span>
-            {isSelected && (
               <img
-                src="/svgs/check.svg"
-                alt="Checked"
-                className="absolute right-0.5 bottom-0.5 w-6 h-6 bg-white rounded-full"
+                src={cat.icon}
+                alt={cat.label}
+                className={`${
+                  isCenter ? "w-[45px] h-[45px] mb-1.5" : "w-[61px] h-[61px] mb-0"
+                }`}
               />
-            )}
+              <span
+                className={`font-semibold font-fredoka text-white text-center transition-opacity overflow-hidden text-[14px] leading-[120%] tracking-[-0.3px] ${
+                  isCenter ? "opacity-100 h-[18px]" : "opacity-0 h-0"
+                }`}
+                style={{ fontWeight: isCenter ? 600 : 400 }}
+              >
+                {isCenter && cat.label}
+              </span>
+              {isSelected && (
+                <img
+                  src="/svgs/check.svg"
+                  alt="Checked"
+                  className="absolute right-0.5 bottom-0.5 w-6 h-6 bg-white rounded-full"
+                />
+              )}
+            </div>
           </div>
         );
       })}
