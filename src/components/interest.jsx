@@ -45,7 +45,7 @@ export default function InterestSpinner({ value = [], onChange, onSpinNext }) {
     if (onSpinNext) {
       onSpinNext.current = spinNext;
     }
-  }, [onSpinNext, spinNext]);
+  }, [onSpinNext]);
 
   const handleCenterClick = (e) => {
     e.stopPropagation();
@@ -82,8 +82,8 @@ export default function InterestSpinner({ value = [], onChange, onSpinNext }) {
 
   return (
     <div
-      className="relative mx-auto flex justify-center items-center"
-      style={{ width: 320, height: 140, marginTop: 16 }}
+      className="relative mx-auto flex justify-center items-center mt-4"
+      style={{ width: 320, height: 140 }}
       onClick={handleAnyClick}
     >
       {visible.map((cat, idx) => {
@@ -102,7 +102,7 @@ export default function InterestSpinner({ value = [], onChange, onSpinNext }) {
               top: position.top,
               width: 105,
               height: 105,
-              background: cat.color,
+              backgroundColor: cat.color,
               transform: `scale(${position.scale})`,
               opacity: position.opacity,
               zIndex: position.zIndex,
@@ -110,34 +110,27 @@ export default function InterestSpinner({ value = [], onChange, onSpinNext }) {
               transition: "all 0.2s cubic-bezier(.4,0,.2,1)",
               cursor: "pointer",
               boxShadow: isCenter ? "0 4px 16px rgba(0,0,0,0.08)" : "none",
+              pointerEvents: "auto",
             }}
             onClick={(e) => {
-              e.stopPropagation();
+              if (isCenter) handleCenterClick(e);
+            }}
+            onTouchEnd={(e) => {
               if (isCenter) handleCenterClick(e);
             }}
           >
             <img
               src={cat.icon}
               alt={cat.label}
-              style={{
-                width: isCenter ? 45 : 61,
-                height: isCenter ? 45 : 61,
-                marginBottom: isCenter ? 6 : 0,
-              }}
+              className={`${
+                isCenter ? "w-[45px] h-[45px] mb-1.5" : "w-[61px] h-[61px] mb-0"
+              }`}
             />
             <span
-              className="font-semibold font-fredoka text-white text-center"
-              style={{
-                fontSize: isCenter ? 14 : 0,
-                fontWeight: isCenter ? 600 : 400,
-                lineHeight: "120%",
-                letterSpacing: "-0.3px",
-                opacity: isCenter ? 1 : 0,
-                height: isCenter ? "18px" : 0,
-                transition: "opacity 0.2s, height 0.2s",
-                overflow: "hidden",
-                textAlign: "center",
-              }}
+              className={`font-semibold font-fredoka text-white text-center transition-opacity overflow-hidden text-[14px] leading-[120%] tracking-[-0.3px] ${
+                isCenter ? "opacity-100 h-[18px]" : "opacity-0 h-0"
+              }`}
+              style={{ fontWeight: isCenter ? 600 : 400 }}
             >
               {isCenter && cat.label}
             </span>
@@ -145,15 +138,7 @@ export default function InterestSpinner({ value = [], onChange, onSpinNext }) {
               <img
                 src="/svgs/check.svg"
                 alt="Checked"
-                style={{
-                  position: "absolute",
-                  right: 3,
-                  bottom: 1,
-                  width: 24,
-                  height: 24,
-                  background: "#fff",
-                  borderRadius: "50%",
-                }}
+                className="absolute right-0.5 bottom-0.5 w-6 h-6 bg-white rounded-full"
               />
             )}
           </div>
