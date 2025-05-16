@@ -110,19 +110,20 @@ export default function InterestSpinner({ value = [], onChange, onSpinNext }) {
               transition: "all 0.2s cubic-bezier(.4,0,.2,1)",
               boxShadow: isCenter ? "0 4px 16px rgba(0,0,0,0.08)" : "none",
               pointerEvents: "auto",
+              position: "absolute",
             }}
           >
-            <div
-              className={`flex flex-col items-center justify-center rounded-full ${
-                isCenter ? "p-6 -m-6 cursor-pointer" : "cursor-default"
-              }`}
+
+            <button
+              type="button"
+              className="w-[150px] h-[150px] rounded-full bg-transparent flex flex-col items-center justify-center cursor-pointer"
               onClick={(e) => {
                 if (isCenter) {
                   e.stopPropagation();
                   handleCenterClick(e);
                 }
               }}
-              onTouchEnd={(e) => {
+              onTouchStart={(e) => {
                 if (isCenter) {
                   e.stopPropagation();
                   handleCenterClick(e);
@@ -135,6 +136,7 @@ export default function InterestSpinner({ value = [], onChange, onSpinNext }) {
                 className={`${
                   isCenter ? "w-[45px] h-[45px] mb-1.5" : "w-[61px] h-[61px] mb-0"
                 }`}
+                draggable={false}
               />
               <span
                 className={`font-semibold font-fredoka text-white text-center transition-opacity overflow-hidden text-[14px] leading-[120%] tracking-[-0.3px] ${
@@ -151,7 +153,7 @@ export default function InterestSpinner({ value = [], onChange, onSpinNext }) {
                   className="absolute right-0.5 bottom-0.5 w-6 h-6 bg-white rounded-full"
                 />
               )}
-            </div>
+            </button>
           </div>
         );
       })}
